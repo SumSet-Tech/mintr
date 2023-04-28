@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="NFTr.pro">
+    <title>Mintr by NFTr.pro</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/sidebars/">
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/mintr.css" rel="stylesheet">
+
+</head>
+<body>
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="nftr" viewBox="0 0 300 300">
+        <style type="text/css">.st0 {
+            fill: #ED1E67;
+        }</style>
+        <g>
+            <g>
+                <path class="st0"
+                      d="M298.2,107.9c5.3-1.8,11.5-2.7,18.8-2.7l-3.6,18.6c-1.8-0.3-3.4-0.5-4.8-0.5c-15.9,0-25.5,8.4-28.9,25.1 l-8.3,41H252l16.5-83.3H287l-2.2,10.8C288.5,112.6,292.9,109.6,298.2,107.9z"/>
+            </g>
+            <path class="st0"
+                  d="M61.2,137.9c-4.5-15.4-13.9-54.4-13.9-55.3l-12.2,7v99.8l12.3,7V143l13.8,61.5l11.6,6.7V67.8l-11.6,6.7 L61.2,137.9z"/>
+            <polyline class="st0"
+                      points="141.5,132.3 101.7,132.3 101.7,67.7 121.6,56 155.8,76 155.8,59.5 121.6,39.4 87.3,59.5 87.3,219.6 101.7,227.9 101.7,146.7 141.5,146.7"/>
+            <polygon class="st0"
+                     points="164.5,81.3 179.2,89.8 179.3,206 193.6,197.8 193.5,98 208,106.4 207.9,89.7 164.5,64.5"/>
+            <path class="st0"
+                  d="M121.5,1.5L2,70.5v138l119.5,68.9L241,208.6v-138L121.5,1.5z M15.2,200.9V78.1l106.3-61.7L226,79.3v120.6 l-104.4,60.4L15.2,200.9z"/>
+        </g>
+    </symbol>
+    <symbol id="home" viewBox="0 0 16 16">
+        <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5z"/>
+    </symbol>
+    <symbol id="collection" viewBox="0 0 48 48">
+        <path d="M19.2 28.95h16.1q.5 0 .75-.475t-.1-.925l-4.6-6.25q-.3-.35-.7-.35-.4 0-.7.35l-4.45 5.85-2.7-3.5q-.3-.35-.7-.325-.4.025-.65.375l-2.95 3.85q-.35.45-.1.925.25.475.8.475Zm-5.9 9.15q-1.35 0-2.375-1.025T9.9 34.7V6.9q0-1.4 1.025-2.4t2.375-1h27.8q1.4 0 2.4 1t1 2.4v27.8q0 1.35-1 2.375T41.1 38.1Zm0-3.4h27.8V6.9H13.3v27.8Zm-6.4 9.8q-1.4 0-2.4-1t-1-2.4V11.6q0-.7.475-1.2T5.2 9.9q.75 0 1.225.5.475.5.475 1.2v29.5h29.5q.7 0 1.2.5t.5 1.2q0 .75-.5 1.225-.5.475-1.2.475Zm6.4-37.6v27.8V6.9Z"/>
+    </symbol>
+    <symbol id="nft" viewBox="0 0 48 48">
+        <path d="M13.35 34.25H34.7q.55 0 .8-.45t-.1-.9l-5.8-7.8q-.3-.35-.7-.35-.4 0-.7.35l-5.9 7.6-3.95-5.4q-.3-.35-.7-.35-.4 0-.7.35l-4.25 5.6q-.3.45-.1.9.2.45.75.45ZM9.1 42.3q-1.35 0-2.375-1.025T5.7 38.9V9.1q0-1.4 1.025-2.4t2.375-1h29.8q1.4 0 2.4 1t1 2.4v29.8q0 1.35-1 2.375T38.9 42.3Zm0-3.4h29.8V9.1H9.1v29.8Zm0-29.8v29.8V9.1Z"/>
+    </symbol>
+
+    <symbol id="image" viewBox="0 0 48 48">
+        <path d="M13.35 34.25H34.7q.55 0 .8-.45t-.1-.9l-5.8-7.8q-.3-.35-.7-.35-.4 0-.7.35l-5.9 7.6-3.95-5.4q-.3-.35-.7-.35-.4 0-.7.35l-4.25 5.6q-.3.45-.1.9.2.45.75.45ZM9.1 42.3q-1.35 0-2.375-1.025T5.7 38.9V9.1q0-1.4 1.025-2.4t2.375-1h29.8q1.4 0 2.4 1t1 2.4v29.8q0 1.35-1 2.375T38.9 42.3Zm0-3.4h29.8V9.1H9.1v29.8Zm0-29.8v29.8V9.1Z"/>
+    </symbol>
+    <symbol id="settings" viewBox="0 0 24 24">
+        <path d="M0 0h24v24H0V0z" fill="none"/>
+        <path d="M19.43 12.98c.04-.32.07-.64.07-.98 0-.34-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.09-.16-.26-.25-.44-.25-.06 0-.12.01-.17.03l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.06-.02-.12-.03-.18-.03-.17 0-.34.09-.43.25l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98 0 .33.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.09.16.26.25.44.25.06 0 .12-.01.17-.03l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.06.02.12.03.18.03.17 0 .34-.09.43-.25l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zm-1.98-1.71c.04.31.05.52.05.73 0 .21-.02.43-.05.73l-.14 1.13.89.7 1.08.84-.7 1.21-1.27-.51-1.04-.42-.9.68c-.43.32-.84.56-1.25.73l-1.06.43-.16 1.13-.2 1.35h-1.4l-.19-1.35-.16-1.13-1.06-.43c-.43-.18-.83-.41-1.23-.71l-.91-.7-1.06.43-1.27.51-.7-1.21 1.08-.84.89-.7-.14-1.13c-.03-.31-.05-.54-.05-.74s.02-.43.05-.73l.14-1.13-.89-.7-1.08-.84.7-1.21 1.27.51 1.04.42.9-.68c.43-.32.84-.56 1.25-.73l1.06-.43.16-1.13.2-1.35h1.39l.19 1.35.16 1.13 1.06.43c.43.18.83.41 1.23.71l.91.7 1.06-.43 1.27-.51.7 1.21-1.07.85-.89.7.14 1.13zM12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
+    </symbol>
+    <symbol id="account" viewBox="0 0 960 960">
+        <path d="M222 801q63-40 124.5-60.5T480 720q72 0 134 20.5T739 801q44-54 62.5-109T820 576q0-145-97.5-242.5T480 236q-145 0-242.5 97.5T140 576q0 61 19 116t63 109Zm257.814-195Q422 606 382.5 566.314q-39.5-39.686-39.5-97.5t39.686-97.314q39.686-39.5 97.5-39.5t97.314 39.686q39.5 39.686 39.5 97.5T577.314 566.5q-39.686 39.5-97.5 39.5Zm-.219 370q-83.146 0-156.275-31.5t-127.225-86Q142 804 111 731.159 80 658.319 80 575.5q0-82.819 31.5-155.659Q143 347 197.5 293t127.341-85.5Q397.681 176 480.5 176q82.819 0 155.659 31.5Q709 239 763 293t85.5 127Q880 493 880 575.734q0 82.734-31.5 155.5T763 858.5q-54 54.5-127.129 86T479.595 976Z"/>
+    </symbol>
+
+    <symbol id="close" viewBox="0 0 960 960">
+        <path d="m249 849-42-42 231-231-231-231 42-42 231 231 231-231 42 42-231 231 231 231-42 42-231-231-231 231Z"/>
+    </symbol>
+</svg>
+
+<main class="d-flex flex-nowrap">
+
+
+    <div class="d-flex flex-column flex-shrink-0 bg-light" style="width: 4.5rem;">
+        <a href="/" class="d-block p-3 link-dark text-decoration-none" title="Mintr by NFTr.pro"
+           data-bs-toggle="tooltip" data-bs-placement="right">
+            <svg class="bi pe-none" width="40" height="32">
+                <use xlink:href="#nftr"/>
+            </svg>
+        </a>
+        <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
+            <li class="nav-item">
+                <a href="../" class="nav-link  py-3 border-bottom rounded-0" aria-current="page" title="Home"
+                   data-bs-toggle="tooltip" data-bs-placement="right">
+                    <svg class="bi pe-none" width="24" height="24" role="img" aria-label="Home">
+                        <use xlink:href="#home"/>
+                    </svg>
+                </a>
+            </li>
+            <li>
+                <a href="../collections" class="nav-link active py-3 border-bottom rounded-0" title="Collections"
+                   data-bs-toggle="tooltip" data-bs-placement="right">
+                    <svg class="bi pe-none" width="24" height="24" role="img" aria-label="Collections">
+                        <use xlink:href="#collection"/>
+                    </svg>
+                </a>
+            </li>
+
+            <li>
+                <a href="../account" class="nav-link py-3 border-bottom rounded-0" title="Account"
+                   data-bs-toggle="tooltip" data-bs-placement="right">
+                    <svg class="bi pe-none" width="24" height="24" role="img" aria-label="Account">
+                        <use xlink:href="#account"/>
+                    </svg>
+                </a>
+            </li>
+
+        </ul>
+
+    </div>
+
+    <div class="b-example-divider b-example-vr"></div>
+
+    <div class="container">
+        <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+                <svg class="bi pe-none" width="24" height="24" role="img" aria-label="Collections">
+                    <use xlink:href="#collection"/>
+                </svg>&nbsp;&nbsp;
+                <span class="fs-4">Collections</span>
+            </a>
+            &nbsp;&nbsp;&nbsp;
+            <button id="createCollectionId" type="button" class="btn btn-primary"
+                    data-bs-toggle="modal" data-bs-target="#newCollectionModal"> + New Collection
+            </button>
+        </header>
+
+        <div class="album py-5 bg-light scroll">
+            <div class="container">
+
+                <div  id="noCollectionMessageId" class="hidden modal-dialog p-5" role="document">
+                    <div class="modal-content rounded-4 shadow">
+                        <div class="modal-body p-5">
+                            <h3 class="fw-bold mb-3">Let's get started!</h3>
+                            <p>Click the <b>New Collection</b> button above to create your first collection.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="collectionsListContainerId" class="list-group w-auto">
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="b-example-divider b-example-vr"></div>
+</main>
+
+<div class="modal fade" id="newCollectionModal" tabindex="-1" aria-labelledby="loadModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="loadModalLabel">New Collection</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cancel"><svg class="bi closeSvg" width="25" height="25">
+                    <use xlink:href="#close"></use>
+                </svg></button>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control floatingTextField required" id="newCollectionNameId"
+                           placeholder="">
+                    <label for="newCollectionNameId" id="newCollectionNameLabelId">Name</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control floatingTextField required" id="newCollectionDescriptionId"
+                           placeholder="">
+                    <label for="newCollectionDescriptionId" id="newCollectionDescriptionLabelId">Description</label>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button id="okNewCollectionModalButtonId" type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                    OK
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../js/jquery-3.3.1.slim.min.js"></script>
+<script src="../js/jquery.min.js"></script>
+<script src="../js/bootstrap.bundle.min.js"></script>
+<script src="../js/dexie.js"></script>
+<script src="../js/lang/en.js"></script>
+<script src="../js/db.js"></script>
+<script src="../js/file.js"></script>
+<script src="../js/layout.js"></script>
+<script src="../js/preview.js"></script>
+<script src="../js/parser.js"></script>
+<script src="../js/app.js"></script>
+<script src="../js/mint.js"></script>
+<script src="../js/processors.js"></script>
+<script src="../js/collections.js"></script>
+
+</body>
+</html>

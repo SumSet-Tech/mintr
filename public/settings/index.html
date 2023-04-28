@@ -1,0 +1,736 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="NFTr.pro">
+    <title>Mintr by NFTr.pro</title>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/mintr.css" rel="stylesheet">
+    <link href="../css/beta-style.css" rel="stylesheet">
+
+</head>
+<body>
+
+
+<input class="hidden" id="loadSnapshotFileInputId" type="file" accept="*/json,.json">
+<input class="hidden" id="loadDefaultSettingsFileInputId" type="file" accept="*/json,.json">
+<input class=" hidden" id="loadNftFileInputId" type="file" accept="*/json,.json">
+
+
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="nftr" viewBox="0 0 300 300">
+        <style type="text/css">.st0 {
+            fill: #ED1E67;
+        }</style>
+        <g>
+            <g>
+                <path class="st0"
+                      d="M298.2,107.9c5.3-1.8,11.5-2.7,18.8-2.7l-3.6,18.6c-1.8-0.3-3.4-0.5-4.8-0.5c-15.9,0-25.5,8.4-28.9,25.1 l-8.3,41H252l16.5-83.3H287l-2.2,10.8C288.5,112.6,292.9,109.6,298.2,107.9z"/>
+            </g>
+            <path class="st0"
+                  d="M61.2,137.9c-4.5-15.4-13.9-54.4-13.9-55.3l-12.2,7v99.8l12.3,7V143l13.8,61.5l11.6,6.7V67.8l-11.6,6.7 L61.2,137.9z"/>
+            <polyline class="st0"
+                      points="141.5,132.3 101.7,132.3 101.7,67.7 121.6,56 155.8,76 155.8,59.5 121.6,39.4 87.3,59.5 87.3,219.6 101.7,227.9 101.7,146.7 141.5,146.7"/>
+            <polygon class="st0"
+                     points="164.5,81.3 179.2,89.8 179.3,206 193.6,197.8 193.5,98 208,106.4 207.9,89.7 164.5,64.5"/>
+            <path class="st0"
+                  d="M121.5,1.5L2,70.5v138l119.5,68.9L241,208.6v-138L121.5,1.5z M15.2,200.9V78.1l106.3-61.7L226,79.3v120.6 l-104.4,60.4L15.2,200.9z"/>
+        </g>
+    </symbol>
+    <symbol id="home" viewBox="0 0 16 16">
+        <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5z"/>
+    </symbol>
+    <symbol id="collection" viewBox="0 0 48 48">
+        <path d="M19.2 28.95h16.1q.5 0 .75-.475t-.1-.925l-4.6-6.25q-.3-.35-.7-.35-.4 0-.7.35l-4.45 5.85-2.7-3.5q-.3-.35-.7-.325-.4.025-.65.375l-2.95 3.85q-.35.45-.1.925.25.475.8.475Zm-5.9 9.15q-1.35 0-2.375-1.025T9.9 34.7V6.9q0-1.4 1.025-2.4t2.375-1h27.8q1.4 0 2.4 1t1 2.4v27.8q0 1.35-1 2.375T41.1 38.1Zm0-3.4h27.8V6.9H13.3v27.8Zm-6.4 9.8q-1.4 0-2.4-1t-1-2.4V11.6q0-.7.475-1.2T5.2 9.9q.75 0 1.225.5.475.5.475 1.2v29.5h29.5q.7 0 1.2.5t.5 1.2q0 .75-.5 1.225-.5.475-1.2.475Zm6.4-37.6v27.8V6.9Z"/>
+    </symbol>
+    <symbol id="image" viewBox="0 0 48 48">
+        <path d="M13.35 34.25H34.7q.55 0 .8-.45t-.1-.9l-5.8-7.8q-.3-.35-.7-.35-.4 0-.7.35l-5.9 7.6-3.95-5.4q-.3-.35-.7-.35-.4 0-.7.35l-4.25 5.6q-.3.45-.1.9.2.45.75.45ZM9.1 42.3q-1.35 0-2.375-1.025T5.7 38.9V9.1q0-1.4 1.025-2.4t2.375-1h29.8q1.4 0 2.4 1t1 2.4v29.8q0 1.35-1 2.375T38.9 42.3Zm0-3.4h29.8V9.1H9.1v29.8Zm0-29.8v29.8V9.1Z"/>
+    </symbol>
+    <symbol id="settings" viewBox="0 0 24 24">
+        <path d="M0 0h24v24H0V0z" fill="none"/>
+        <path d="M19.43 12.98c.04-.32.07-.64.07-.98 0-.34-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.09-.16-.26-.25-.44-.25-.06 0-.12.01-.17.03l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.06-.02-.12-.03-.18-.03-.17 0-.34.09-.43.25l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98 0 .33.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.09.16.26.25.44.25.06 0 .12-.01.17-.03l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.06.02.12.03.18.03.17 0 .34-.09.43-.25l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zm-1.98-1.71c.04.31.05.52.05.73 0 .21-.02.43-.05.73l-.14 1.13.89.7 1.08.84-.7 1.21-1.27-.51-1.04-.42-.9.68c-.43.32-.84.56-1.25.73l-1.06.43-.16 1.13-.2 1.35h-1.4l-.19-1.35-.16-1.13-1.06-.43c-.43-.18-.83-.41-1.23-.71l-.91-.7-1.06.43-1.27.51-.7-1.21 1.08-.84.89-.7-.14-1.13c-.03-.31-.05-.54-.05-.74s.02-.43.05-.73l.14-1.13-.89-.7-1.08-.84.7-1.21 1.27.51 1.04.42.9-.68c.43-.32.84-.56 1.25-.73l1.06-.43.16-1.13.2-1.35h1.39l.19 1.35.16 1.13 1.06.43c.43.18.83.41 1.23.71l.91.7 1.06-.43 1.27-.51.7 1.21-1.07.85-.89.7.14 1.13zM12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
+    </symbol>
+    <symbol id="account" viewBox="0 0 960 960">
+        <path d="M222 801q63-40 124.5-60.5T480 720q72 0 134 20.5T739 801q44-54 62.5-109T820 576q0-145-97.5-242.5T480 236q-145 0-242.5 97.5T140 576q0 61 19 116t63 109Zm257.814-195Q422 606 382.5 566.314q-39.5-39.686-39.5-97.5t39.686-97.314q39.686-39.5 97.5-39.5t97.314 39.686q39.5 39.686 39.5 97.5T577.314 566.5q-39.686 39.5-97.5 39.5Zm-.219 370q-83.146 0-156.275-31.5t-127.225-86Q142 804 111 731.159 80 658.319 80 575.5q0-82.819 31.5-155.659Q143 347 197.5 293t127.341-85.5Q397.681 176 480.5 176q82.819 0 155.659 31.5Q709 239 763 293t85.5 127Q880 493 880 575.734q0 82.734-31.5 155.5T763 858.5q-54 54.5-127.129 86T479.595 976Z"/>
+    </symbol>
+
+</svg>
+
+<main class="d-flex flex-nowrap settingsPage">
+
+
+    <div class="d-flex flex-column flex-shrink-0 bg-light" style="width: 4.5rem;">
+        <a href="/" class="d-block p-3 link-dark text-decoration-none" title="Mintr by NFTr.pro"
+           data-bs-toggle="tooltip" data-bs-placement="right">
+            <svg class="bi pe-none" width="40" height="32">
+                <use xlink:href="#nftr"/>
+            </svg>
+        </a>
+        <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
+            <li class="nav-item">
+                <a href="../" class="nav-link  py-3 border-bottom rounded-0" aria-current="page" title="Home"
+                   data-bs-toggle="tooltip" data-bs-placement="right">
+                    <svg class="bi pe-none" width="24" height="24" role="img" aria-label="Home">
+                        <use xlink:href="#home"/>
+                    </svg>
+                </a>
+            </li>
+            <li>
+                <a href="../collections" class="nav-link  py-3 border-bottom rounded-0" title="Collections"
+                   data-bs-toggle="tooltip" data-bs-placement="right">
+                    <svg class="bi pe-none" width="24" height="24" role="img" aria-label="Collections">
+                        <use xlink:href="#collection"/>
+                    </svg>
+                </a>
+            </li>
+
+            <li>
+                <a href="../account" class="nav-link py-3 border-bottom rounded-0" title="Account"
+                   data-bs-toggle="tooltip" data-bs-placement="right">
+                    <svg class="bi pe-none" width="24" height="24" role="img" aria-label="Account">
+                        <use xlink:href="#account"/>
+                    </svg>
+                </a>
+            </li>
+
+        </ul>
+
+    </div>
+
+    <div class="b-example-divider b-example-vr"></div>
+
+    <div class="container">
+        <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+            <div class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+                <svg class="bi pe-none" width="24" height="24" role="img" aria-label="Collections">
+                    <use xlink:href="#settings"></use>
+                </svg>&nbsp;&nbsp;
+                <span class="fs-4">Default Settings</span>
+            </div>
+
+            <div>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            File
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a id="saveDefaultsMenuItemId" class="dropdown-item" href="#">Save Defaults</a></li>
+                            <li><a id="loadDefaultsMenuItemId" class="dropdown-item" href="#">Load Defaults</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a id="resetDefaultsMenuItemId" class="dropdown-item" href="#">Reset Defaults</a></li>
+
+                        </ul>
+                    </li>
+
+                </ul>
+            </div>
+        </header>
+
+
+
+        <div class="container scroll">
+
+            <nav>
+                <div class="nav nav-tabs mb-3" id="nav-tab-settings"
+                     role="tablist">
+
+                    <!-- NFT Tab -->
+                    <button class="nav-link active" id="nav-nft-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#nav-tabContent"
+                            type="button" role="tab"
+                            aria-controls="nav-tabContent"
+                            aria-selected="false" tabindex="-1">NFT
+                    </button>
+
+                    <!-- Collection Tab -->
+                    <button class="nav-link" id="nav-collection-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#nav-collection"
+                            type="button" role="tab"
+                            aria-controls="nav-collection"
+                            aria-selected="false" tabindex="-1">Collection
+                    </button>
+
+                    <!-- Creator Tab -->
+                    <button class="nav-link " id="nav-creator-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#nav-creator"
+                            type="button" role="tab"
+                            aria-controls="nav-creator"
+                            aria-selected="false" tabindex="-1">Creator
+                    </button>
+
+
+                    <!-- License Tab -->
+                    <button class="nav-link " id="nav-license-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#nav-license"
+                            type="button" role="tab"
+                            aria-controls="nav-license"
+                            aria-selected="true">License
+                    </button>
+
+                    <!-- Chia Tab -->
+                    <button class="nav-link " id="nav-chia-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#nav-settings-wallet"
+                            type="button"
+                            role="tab" aria-controls="nav-settings-wallet"
+                            aria-selected="false" tabindex="-1">Chia
+                    </button>
+
+                    <!-- IPFS Tab -->
+                    <button class="nav-link " id="nav-ipfs-tab"
+                            data-bs-toggle="tab" data-bs-target="#nav-ipfs"
+                            type="button" role="tab"
+                            aria-controls="nav-ipfs"
+                            aria-selected="true">IPFS
+                    </button>
+                </div>
+            </nav>
+
+            <div class="tab-content" id="nav-tab-settingsContent">
+
+                <!-- Creator Tab Content -->
+                <div class="tab-pane fade" id="nav-creator"
+                     role="tabpanel"
+                     aria-labelledby="nav-creator-tab">
+
+                    <div class="form-floating mb-3">
+                        <input type="text"
+                               class="form-control floatingTextField right-margin-for-checkbox required"
+                               id="royaltyPercentId"
+                               placeholder="">
+                        <label for="royaltyPercentId"
+                               id="royaltyPercentLabelId">Royalty
+                            Percent</label>
+                        <input type="checkbox" class="form-check-input overrideCheckbox" id="royaltyPercentCheckboxId">
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="text"
+                               class="form-control floatingTextField right-margin-for-checkbox required"
+                               id="royaltyAddressId"
+                               placeholder="">
+                        <label for="royaltyAddressId"
+                               id="royaltyAddressLabelId">Royalty
+                            Address</label>
+                        <input type="checkbox" class="form-check-input overrideCheckbox" id="royaltyAddressCheckboxId">
+                    </div>
+
+                    <div class="form-floating mb-3 ">
+                        <input type="text"
+                               class="form-control floatingTextField right-margin-for-checkbox required"
+                               id="nftAddressId"
+                               placeholder="">
+                        <label for="nftAddressId" id="nftAddressLabelId">Target
+                            Address</label>
+                        <input type="checkbox" class="form-check-input overrideCheckbox" id="targetAddressCheckboxId">
+                    </div>
+
+                    <div class="form-floating mb-3 ">
+                        <input type="text"
+                               class="form-control floatingTextField right-margin-for-checkbox "
+                               id="didAddressId"
+                               placeholder="">
+                        <label for="didAddressId" id="didAddressLabelId">DID
+                            Address</label>
+                        <input type="checkbox" class="form-check-input overrideCheckbox" id="didAddressCheckboxId">
+                    </div>
+
+                </div>
+
+                <!-- NFT Tab Content -->
+                <div class="tab-pane fade active show" id="nav-tabContent">
+
+                    <div>
+                        <nav>
+                            <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+                                <button class="nav-link active" id="nav-basic-tab"
+                                        data-bs-toggle="tab" data-bs-target="#nav-basic"
+                                        type="button" role="tab"
+                                        aria-controls="nav-basic"
+                                        aria-selected="true">Basic
+                                </button>
+                                <button class="nav-link" id="nav-traits-tab"
+                                        data-bs-toggle="tab"
+                                        data-bs-target="#nav-traits"
+                                        type="button" role="tab"
+                                        aria-controls="nav-traits"
+                                        aria-selected="false" tabindex="-1">Traits
+                                </button>
+                            </div>
+                        </nav>
+                        <div class="tab-content" >
+                            <div class="tab-pane fade active show" id="nav-basic"
+                                 role="tabpanel"
+                                 aria-labelledby="nav-basic-tab">
+                                <div class="form-floating mb-3">
+                                    <input type="text"
+                                           class="form-control floatingTextField right-margin-for-checkbox required"
+                                           id="nftNameId"
+                                           placeholder="">
+                                    <label for="nftNameId"
+                                           id="nftNameLabelId">Name</label>
+                                    <input type="checkbox" class="form-check-input overrideCheckbox" id="nftNameCheckboxId">
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text"
+                                           class="form-control floatingTextField right-margin-for-checkbox required"
+                                           id="nftDescriptionId"
+                                           placeholder="">
+                                    <label for="nftDescriptionId"
+                                           id="nftDescriptionLabelId">Description</label>
+                                    <input type="checkbox" class="form-check-input overrideCheckbox" id="nftDescriptionCheckboxId">
+                                </div>
+                                <div class="form-floating mb-3">
+
+                                    <div>
+                                        <input type="checkbox" class="form-check-input"
+                                               id="nftIsSensitiveId">
+                                        <label class="form-check-label"
+                                               for="nftIsSensitiveId"
+                                               id="nftIsSensitiveLabelId">
+                                            Is sensitive</label>
+                                    <input type="checkbox" class="form-check-input overrideCheckbox overrideCheckboxNoOffset" id="nftIsSensitiveCheckboxId">
+                                    </div>
+                                </div>
+
+                                <hr>
+
+
+                                <div class="row g-5">
+
+                                    <div class="col-md-6">
+
+                                        <div class="form-floating mb-3">
+                                            <input type="text"
+                                                   class="form-control floatingTextField right-margin-for-checkbox"
+                                                   id="seriesNumberId"
+                                                   placeholder="">
+                                            <label for="seriesNumberId"
+                                                   id="seriesNumberLabelId">
+                                                Series Number</label>
+                                            <input type="checkbox" class="form-check-input overrideCheckbox" id="seriesNumberCheckboxId">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        <div class="form-floating mb-3">
+                                            <input type="text"
+                                                   class="form-control floatingTextField right-margin-for-checkbox"
+                                                   id="seriesTotalId"
+                                                   placeholder="">
+                                            <label for="seriesTotalId"
+                                                   id="seriesTotalLabelId">
+                                                Series Total</label>
+                                            <input type="checkbox" class="form-check-input overrideCheckbox" id="seriesTotalCheckboxId">
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="nav-traits" role="tabpanel"
+                                 aria-labelledby="nav-traits-tab">
+
+                                <div id="traitsListId"></div>
+
+                                <div class="form-floating mb-3">
+                                    <button id="addTraitButtonId" type="button"
+                                            class="btn btn-primary btn-sm fillSpace">
+                                        Add Trait (+)
+                                    </button>
+                                </div>
+
+                            </div>
+                            <!--<div class="tab-pane fade" id="nav-import" role="tabpanel"
+                                 aria-labelledby="nav-import-tab">
+                            </div>-->
+                        </div>
+                    </div>
+
+
+                    <div class="tab-pane fade" id="nav-import" role="tabpanel"
+                         aria-labelledby="nav-import-tab">
+                    </div>
+                </div>
+
+
+                <!-- Collection Tab Content -->
+                <div class="tab-pane fade" id="nav-collection"
+                     role="tabpanel"
+                     aria-labelledby="nav-collection-tab">
+
+
+                    <div class="form-floating mb-3">
+                        <input type="text"
+                               class="form-control floatingTextField right-margin-for-checkbox required"
+                               id="collectionIdId"
+                               placeholder="">
+                        <label for="collectionIdId"
+                               id="collectionIdLabelId">Collection
+                            Id</label>
+                        <input type="checkbox" class="form-check-input overrideCheckbox" id="collectionIdCheckboxId">
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="text"
+                               class="form-control floatingTextField right-margin-for-checkbox required"
+                               id="collectionNameId"
+                               placeholder="">
+                        <label for="collectionNameId"
+                               id="collectionNameLabelId">Collection
+                            Name</label>
+                        <input type="checkbox" class="form-check-input overrideCheckbox" id="collectionNameCheckboxId">
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="text"
+                               class="form-control floatingTextField right-margin-for-checkbox required"
+                               id="collectionDescriptionId"
+                               placeholder="">
+                        <label for="collectionDescriptionId"
+                               id="collectionDescriptionLabelId">Collection
+                            Description</label>
+                        <input type="checkbox" class="form-check-input overrideCheckbox"
+                               id="collectionDescriptionCheckboxId">
+                    </div>
+
+                    <hr>
+
+                    <div class="form-floating mb-3">
+                        <input type="text"
+                               class="form-control floatingTextField right-margin-for-checkbox"
+                               data-bs-toggle="tooltip"
+                               data-bs-placement="auto"
+                               title="EG: https://nftr.pro/icon.png"
+                               id="collectionIconId"
+                               placeholder="">
+                        <label for="collectionIconId"
+                               id="collectionIconLabelId">Icon</label>
+                        <input type="checkbox" class="form-check-input overrideCheckbox" id="iconCheckboxId">
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="text"
+                               class="form-control floatingTextField right-margin-for-checkbox"
+                               data-bs-toggle="tooltip"
+                               data-bs-placement="auto"
+                               title="EG: https://nftr.pro/banner.png"
+                               id="collectionBannerId"
+                               placeholder="">
+                        <label for="collectionBannerId"
+                               id="collectionBannerLabelId">Banner</label>
+                        <input type="checkbox" class="form-check-input overrideCheckbox" id="bannerCheckboxId">
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="text"
+                               class="form-control floatingTextField right-margin-for-checkbox"
+                               data-bs-toggle="tooltip"
+                               data-bs-placement="auto"
+                               title="EG: @nftr_pro"
+                               id="collectionTwitterId"
+                               placeholder="">
+                        <label for="collectionTwitterId"
+                               id="collectionTwitterLabelId">Twitter</label>
+                        <input type="checkbox" class="form-check-input overrideCheckbox" id="twitterCheckboxId">
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="text"
+                               class="form-control floatingTextField right-margin-for-checkbox"
+                               data-bs-toggle="tooltip"
+                               data-bs-placement="auto"
+                               title="EG: https://nftr.pro"
+                               id="collectionWebsiteId"
+                               placeholder="">
+                        <label for="collectionWebsiteId"
+                               id="collectionWebsiteLabelId">Website</label>
+                        <input type="checkbox" class="form-check-input overrideCheckbox" id="websiteCheckboxId">
+                    </div>
+
+
+                    <div class="form-floating mb-3">
+                        <input type="text"
+                               class="form-control floatingTextField right-margin-for-checkbox"
+                               data-bs-toggle="tooltip"
+                               data-bs-placement="auto"
+                               title="EG:  https://discord.gg/j7PmvGv5ra"
+                               id="collectionDiscordId"
+                               placeholder="">
+                        <label for="collectionDiscordId"
+                               id="collectionDiscordLabelId">Discord</label>
+                        <input type="checkbox" class="form-check-input overrideCheckbox" id="discordCheckboxId">
+                    </div>
+
+
+                    <div class="form-floating mb-3">
+                        <input type="text"
+                               class="form-control floatingTextField right-margin-for-checkbox"
+                               id="collectionInstagramId"
+                               placeholder="">
+                        <label for="collectionInstagramId"
+                               id="collectionInstagramLabelId">Instagram</label>
+                        <input type="checkbox" class="form-check-input overrideCheckbox" id="instagramCheckboxId">
+                    </div>
+
+
+                    <div class="form-floating mb-3">
+                        <input type="text"
+                               class="form-control floatingTextField right-margin-for-checkbox"
+                               id="collectionMediumId"
+                               placeholder="">
+                        <label for="collectionMediumId"
+                               id="collectionMediumLabelId">Medium</label>
+                        <input type="checkbox" class="form-check-input overrideCheckbox" id="mediumCheckboxId">
+                    </div>
+
+                    <hr>
+
+
+                    <div class="row g-5">
+
+                        <div class="col-md-6">
+
+                            <div class="form-floating mb-3">
+                                <input type="text"
+                                       class="form-control floatingTextField right-margin-for-checkbox"
+                                       id="collectionEditionNumberId"
+                                       placeholder="">
+                                <label for="collectionEditionNumberId"
+                                       id="collectionEditionNumberLabelId">Edition
+                                    Number</label>
+                                <input type="checkbox" class="form-check-input overrideCheckbox"
+                                       id="editionNumberCheckboxId">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+
+                            <div class="form-floating mb-3">
+                                <input type="text"
+                                       class="form-control floatingTextField right-margin-for-checkbox"
+                                       id="collectionEditionTotalId"
+                                       placeholder="">
+                                <label for="collectionEditionTotalId"
+                                       id="collectionEditionTotalLabelId">Edition
+                                    Count</label>
+                                <input type="checkbox" class="form-check-input overrideCheckbox"
+                                       id="editionCountCheckboxId">
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Chia Tab Content -->
+                <div class="tab-pane fade" id="nav-settings-wallet"
+                     role="tabpanel"
+                     aria-labelledby="nav-chia-tab">
+
+                    <div class="form-floating mb-3">
+                        <input type="text"
+                               class="form-control floatingTextField right-margin-for-checkbox required"
+                               id="walletIdId"
+                               placeholder="">
+                        <label for="walletIdId" id="walletIdLabelId">Wallet
+                            Index</label>
+                        <input type="checkbox" class="form-check-input overrideCheckbox" id="walletIndexCheckboxId">
+                    </div>
+
+
+                    <div class="form-floating mb-3">
+                        <input type="text"
+                               class="form-control floatingTextField right-margin-for-checkbox required"
+                               id="feeId"
+                               placeholder="">
+                        <label for="feeId" id="feeLabelId">Mint Fee
+                            (XCH)</label>
+                        <input type="checkbox" class="form-check-input overrideCheckbox" id="mintFeeCheckboxId">
+                    </div>
+
+
+                    <div class="form-floating mb-3">
+                        <input type="text"
+                               class="form-control floatingTextField right-margin-for-checkbox "
+                               id="walletFingerprintId"
+                               placeholder="">
+                        <label for="walletFingerprintId"
+                               id="walletFingerprintLabelId">
+                            Wallet Fingerprint</label>
+                        <input type="checkbox" class="form-check-input overrideCheckbox" id="walletFingerprintCheckboxId">
+                    </div>
+
+
+
+                </div>
+
+
+                <!-- IPFS Tab Content -->
+                <div class="tab-pane fade" id="nav-ipfs" role="tabpanel"
+                     aria-labelledby="nav-ipfs-tab">
+
+                    <div class="d-grid gap-3">
+                        <div class="form-floating mb-3">
+                            <input type="text"
+                                   class="form-control floatingTextField right-margin-for-checkbox"
+                                   id="nftStorageApiTokenId"
+                                   placeholder="">
+                            <label for="nftStorageApiTokenId"
+                                   id="nftStorageApiTokenLabelId">
+                                NFT.Storage API Token</label>
+                            <input type="checkbox" class="form-check-input overrideCheckbox" id="nftStorageApiTokenCheckboxId">
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!-- License Tab Content -->
+                <div class="tab-pane fade" id="nav-license" role="tabpanel"
+                     aria-labelledby="nav-license-tab">
+
+                    <div class="d-grid gap-3">
+
+
+                        <div>
+                            <nav>
+                                <div class="nav nav-tabs mb-3"
+                                     id="licenses_-tab"
+                                     role="tablist">
+                                    <button class="nav-link active"
+                                            id="licenses_-basic-tab"
+                                            data-bs-toggle="tab"
+                                            data-bs-target="#licenses_-basic"
+                                            type="button" role="tab"
+                                            aria-controls="licenses_-basic"
+                                            aria-selected="true">Basic
+                                    </button>
+                                    <button class="nav-link"
+                                            id="licenses_-custom-tab"
+                                            data-bs-toggle="tab"
+                                            data-bs-target="#licenses_-custom"
+                                            type="button" role="tab"
+                                            aria-controls="licenses_-custom"
+                                            aria-selected="false"
+                                            tabindex="-1">
+                                        Expert
+                                    </button>
+                                </div>
+                            </nav>
+                            <div class="tab-content"
+                                 id="licenses_-tabContent">
+                                <div class="tab-pane fade active show"
+                                     id="licenses_-basic" role="tabpanel"
+                                     aria-labelledby="licenses_-basic-tab">
+
+                                    <div class="accordion-body">
+
+                                        <div class="d-grid gap-3">
+
+                                            <form id="license-upload"
+                                                  enctype="multipart/form-data">
+                                                <div class="form group">
+                                                    <input type="file"
+                                                           class="form-control"
+                                                           id="licenseFileId"
+                                                           aria-describedby="nftFileHelp"
+                                                           placeholder=""
+                                                           onchange="app.openLicenseFile(event)">
+                                                </div>
+                                            </form>
+
+                                            <button id="uploadLicenseToIpfsId"
+                                                    type="button"
+                                                    class="btn btn-primary"
+                                                    onclick="app.uploadLicenseToIpfs()">
+                                                Upload
+                                            </button>
+
+                                            <div id="licenseAlertId"
+                                                 class="scrollOverflow"></div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade"
+                                     id="licenses_-custom"
+                                     role="tabpanel"
+                                     aria-labelledby="licenses_-custom-tab">
+
+                                    <div class="form-floating mb-3">
+                                        <input type="text"
+                                               class="form-control floatingTextField right-margin-for-checkbox required"
+                                               id="licenseHashId"
+                                               placeholder="">
+                                        <label for="licenseHashId"
+                                               id="licenseHashLabelId">License
+                                            Hash
+                                        </label>
+                                    </div>
+
+                                    <div id="licensesListId"></div>
+
+                                    <div class="form-floating mb-3">
+                                        <button id="addLicenseButtonId"
+                                                type="button"
+                                                class="btn btn-primary btn-sm fillSpace">
+                                            Add License URI (+)
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <div class="b-example-divider b-example-vr"></div>
+</main>
+
+
+<script src="../js/jquery-3.3.1.slim.min.js"></script>
+<script src="../js/bootstrap.bundle.min.js"></script>
+<script src="../js/jquery.min.js"></script>
+
+<!-- Dexie for IndexedDB -->
+<script src="../js/dexie.js"></script>
+
+<!-- TODO Refactor into JS loader in app.js -->
+<script src="../js/lang/en.js"></script>
+<script src="../js/db.js"></script>
+<script src="../js/file.js"></script>
+<script src="../js/layout.js"></script>
+<script src="../js/preview.js"></script>
+<script src="../js/parser.js"></script>
+<script src="../js/app.js"></script>
+<script src="../js/sidebars.js"></script>
+<script src="../js/settings.js"></script>
+<script src="../js/processors.js"></script>
+
+
+
+</body>
+</html>
