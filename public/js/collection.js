@@ -212,12 +212,16 @@ app.initCollectionView = async () => {
     });
 
     $("#collectionEditorUploadButtonId").click(() => {
+        if (!app.state.collection.userData.nftStorageApiToken) {
+            alert("Missing NFT Storage API Token");
+            return;
+        }
         if (!app.batchModal) app.batchModal = new bootstrap.Modal('#batchProcessorId');
         app.state.collection.batchMode = "ready"; //upload
+        app.uploadRequestSource = "collection";
         app.drawBatchModalUi();
         app.batchModalState = "uploadReady";
         app.batchModal.show();
-
     });
 
     $("#uploadBatchButtonId").click(async () => {
@@ -231,7 +235,7 @@ app.initCollectionView = async () => {
     });
 
     $(".nav-link").bind("shown.bs.tab", async event => {
-            //console.log("tab event: ", event.currentTarget.id);
+            // console.log("id: ", event.currentTarget.id);
 
             if (event.currentTarget.id === "nft-editor-tab") {
                 app.tabSelectedByUser = "nft";
@@ -240,6 +244,10 @@ app.initCollectionView = async () => {
             if (event.currentTarget.id === "collection-editor-tab") {
                 app.tabSelectedByUser = "collection";
                 await app.doToggleEditorPanel(true, "collection", false);
+            }
+            if (event.currentTarget.id === "mint-tab") {
+                app.tabSelectedByUser = "mint";
+                await app.doToggleEditorPanel(true, "mint", false);
             }
 
             await app.waitSeconds(100);
@@ -682,7 +690,9 @@ app.drawCurrentCollection = (whoCalledMe = "") => {
 // updates the state of a single item without redrawing everything
 app.redrawAssetGridItem = (asset) => {
     app.$gridItemsId = app.$gridItemsId || $("#gridItemsId");
-    if (asset.metadata.buildData.thumbIndex && asset.metadata.buildData.sourceFiles[asset.metadata.buildData.thumbIndex] && asset.metadata.buildData.sourceFiles[asset.metadata.buildData.thumbIndex].thumb) {
+    if (asset.metadata.buildData.thumbIndex
+        && asset.metadata.buildData.sourceFiles[asset.metadata.buildData.thumbIndex]
+        && asset.metadata.buildData.sourceFiles[asset.metadata.buildData.thumbIndex].thumb) {
         let uri = URL.createObjectURL(asset.metadata.buildData.sourceFiles[asset.metadata.buildData.thumbIndex].thumb);
         $('img[data-index="' + asset.index + '"]').attr('src', uri);
     }
@@ -730,12 +740,15 @@ app.updateSpaceAvailable = () => {
 // called by the UI to open and close the editor panel and to show the specific editor views
 //
 app.doToggleEditorPanel = async (show = null, view = "collection", force = false) => new Promise(async (resolve, reject) => {
+
     // console.log(`[ doToggleEditorPanel ] IN show: ${show} - view: ${view} - force: ${force}`);
 
     app.tabSelectedByUser = view;
 
     app.$panelContainerId = app.$panelContainerId || $("#panelContainerId");
     app.$collectionEditor = app.$collectionEditor || $("#collection-editor");
+    app.$mintPanel = app.$mintPanel || $("#mintPanelId");
+
     app.$nftEditor = app.$nftEditor || $("#nft-editor");
 
     if (show === null) show = app.$panelContainerId.hasClass("mintr-collapse");
@@ -751,15 +764,26 @@ app.doToggleEditorPanel = async (show = null, view = "collection", force = false
         app.$panelContainerId.removeClass("mintr-collapse");
         if (view === "collection") {
 
-            app.$collectionEditor.removeClass("hidden");
             app.$nftEditor.addClass("hidden");
+            app.$mintPanel.addClass("hidden");
+            app.$collectionEditor.removeClass("hidden");
 
             if (app.editorTabs)
                 app.editorTabs["collection-editor-tab"].tabTrigger.show();
 
-        } else {
+        } else if (view === "mint") {
 
             app.$collectionEditor.addClass("hidden");
+            app.$nftEditor.addClass("hidden");
+            app.$mintPanel.removeClass("hidden");
+
+            if (app.editorTabs)
+                app.editorTabs["mint-tab"].tabTrigger.show();
+
+        } else {
+            // NFT
+            app.$collectionEditor.addClass("hidden");
+            app.$mintPanel.addClass("hidden");
             app.$nftEditor.removeClass("hidden");
 
             if (app.editorTabs)
@@ -898,7 +922,7 @@ app.doStartButtonMainAction = () => {
 
     let doJustSelectedNft = $("#autoFillProcessItems1").is(':checked');
 
-    // console.log("[ doStartButtonMainAction ] app.batchModalState: " + app.batchModalState);
+    console.log("[ doStartButtonMainAction ] batchModalState: " + app.batchModalState);
 
     switch (app.batchModalState) {
         case  "autoFillCurrent":
@@ -1551,7 +1575,7 @@ app.doAddGenericFilesToDBCatalog = async () => {
 
 app.drawItemCountHtml = () => {
 
-    itemCountId.innerHTML = "Total: " + app.state.collection.itemsTotal + " • Pages: " + app.state.collection.numberOfPages;
+    itemCountId.innerHTML = "Total: " + app.state.collection.itemsTotal + " • Pages: " + (app.state.collection.numberOfPages || 0);
 
     if (app.state.selection) itemSelectedCountId.innerHTML = "• Selected: " + app.state.selection.arrayOfIndexes.length;
 

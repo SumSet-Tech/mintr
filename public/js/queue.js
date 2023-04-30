@@ -253,7 +253,6 @@ app.queueStateIsBusy = isBusy => {
         if (app.$queueEmptyIconId) app.$queueEmptyIconId.removeClass("visually-hidden");
         if (app.$queueBusyIconId) app.$queueBusyIconId.addClass("visually-hidden");
     }
-
 }
 
 app.doQueueStart = () => {

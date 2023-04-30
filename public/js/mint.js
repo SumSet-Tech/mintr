@@ -89,7 +89,7 @@ app.updateBatchMintCsv = (batchId) => {
 
     return new Promise((resolve, reject) => {
 
-        console.log("[ updateBatchMintCsv ] batchId: " + batchId);
+        // console.log("[ updateBatchMintCsv ] batchId: " + batchId);
 
         if (!batchId) return;
 
@@ -104,14 +104,14 @@ app.updateBatchMintCsv = (batchId) => {
 
         }).then(async batches => {
             const assetIndexes = batches[0].assetIndexes;
-            console.log("[ updateBatchMintCsv ] assetIndexes: ", assetIndexes);
+            // console.log("[ updateBatchMintCsv ] assetIndexes: ", assetIndexes);
             let csvLine = "";
             for (const key in assetIndexes) {
 
                 let assetData = await app.getAssetDataWithIndex(assetIndexes[key]);
 
                 if (!assetData) {
-                    console.log("[ updateBatchMintCsv ] ABORTED - NO ASSET DATA FOUND FOR: ", assetIndexes[key]);
+                    // console.log("[ updateBatchMintCsv ] ABORTED - NO ASSET DATA FOUND FOR: ", assetIndexes[key]);
                     continue;
                 }
 
@@ -127,7 +127,7 @@ app.updateBatchMintCsv = (batchId) => {
                 }
 
                 if (!assetData.metadata.mainFileUrl || !assetData.metadata.metadataHash) {
-                    console.log("[ updateBatchMintCsv ] main file: name: ", assetData.name + " - mainFileUrl: " + assetData.metadata.mainFileUrl + " - hash: " + assetData.metadata.metadataHash);
+                    // console.log("[ updateBatchMintCsv ] main file: name: ", assetData.name + " - mainFileUrl: " + assetData.metadata.mainFileUrl + " - hash: " + assetData.metadata.metadataHash);
                     mintBatchBulkMintingWarningTextId.innerHTML = "Some assets are not uploaded yet. Make sure you have uploaded the files to IPFS first.";
                     app.$mintBatchBulkMintingWarningId.removeClass("hidden");
                     break;
@@ -171,7 +171,7 @@ app.drawMintBatchOptions = async (whoCalledMe = "") => {
 
     if (!app.currentBatchId) return;
 
-    console.log("[ drawMintBatchOptions ] whoCalledMe: " + whoCalledMe + " - app.state.mintBatch.options: ", app.state.mintBatch.options);
+    // console.log("[ drawMintBatchOptions ] whoCalledMe: " + whoCalledMe + " - app.state.mintBatch.options: ", app.state.mintBatch.options);
 
 
     app.db.open().then(function () {
@@ -217,6 +217,10 @@ app.drawMintBatchOptions = async (whoCalledMe = "") => {
         });
 
         // console.log("[ app.drawMintBatchOptions ] drawMintBatchOptions: " + app.state.mintBatch.options.mode);
+
+        // default mode is bulk minting
+        if (!app.state.mintBatch.options.mode || app.state.mintBatch.options.mode === "")
+            app.state.mintBatch.options.mode = "bulk";
 
         app.formIsDirty = true;
         if (app.state.mintBatch.options.mode === "singles") {

@@ -26,7 +26,7 @@ app.licenseTemplate = `
         <div class="form-floating">
             <button data-id="ROWID" type="button" onclick="app.removeLicense(this)"
                     class="btn btn-outline-primary btn-sm fillSpace">
-                X
+                x
             </button>
         </div>
     </div>

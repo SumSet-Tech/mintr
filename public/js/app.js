@@ -972,11 +972,16 @@ app.getRpcCommand = function (userData) {
         return "";
     }
 
+    console.log("[ getRpcCommand ] userData: ", userData);
+
     let rpcCommand = "chia rpc wallet nft_mint_nft ";
 
     let assetUris = [];
     let licenseUris = [];
     let metadataUris = [];
+
+    if (userData.mainFileUrl)
+        assetUris.push(userData.mainFileUrl);
 
     if (userData.urls) for (let i = 0; i < userData.urls.length; i++) {
         assetUris.push(userData.urls[i].url);
@@ -984,6 +989,10 @@ app.getRpcCommand = function (userData) {
     if (userData.licenses) for (let i = 0; i < userData.licenses.length; i++) {
         licenseUris.push(userData.licenses[i].url);
     }
+
+    if (userData.metadataUrl)
+        metadataUris.push(userData.metadataUrl);
+
     if (userData.metadataUris) for (let i = 0; i < userData.metadataUris.length; i++) {
         metadataUris.push(userData.metadataUris[i].url);
     }
@@ -1155,7 +1164,10 @@ app.saveFormState = async (whoCalledMe = "") => {
             app.generateJson(app.userData, "saveFormState"); // updates the JSON in the preview tab of the NFT editor
             // console.log("[ saveFormState ] collection page, NFT editor - called by " + whoCalledMe + " - userData: ", app.userData);
             await app.saveCurrentEditorSearchTerms(app.userData);
-            app.redrawAssetGridItem(app.currentAsset);
+
+            if (app.currentAsset)
+                app.redrawAssetGridItem(app.currentAsset);
+
             // app.drawPanel();
 
 

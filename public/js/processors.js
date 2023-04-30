@@ -118,7 +118,7 @@ app.autoFillFormIsDirty = true;
 
 app.refreshAutoFillForm = () => {
 
-    console.log("[ refreshAutoFillForm ]");
+    // console.log("[ refreshAutoFillForm ]");
 
     app.autoFillFormIsDirty = false;
     let autoFillGroupingOption = autoFillGroupingOptionId.value;
@@ -134,8 +134,7 @@ app.doStartAutoFillAll = async function () {
 
     // console.log("[ doStartAutoFillAll ]");
 
-    if (app.autoFillFormIsDirty)
-        app.refreshAutoFillForm();
+    if (app.autoFillFormIsDirty) app.refreshAutoFillForm();
 
     app.changeBatchProcessingView("Update Metadata");
 
@@ -312,31 +311,22 @@ app.doAutoFillOfSelectedNft = function () {
 
 
 app.doUploadOfSelectedNft = function () {
+
+    if (!app.state.collection.userData.nftStorageApiToken) {
+        alert("Missing NFT Storage API Token");
+        return;
+    }
+
     if (!app.batchModal) app.batchModal = new bootstrap.Modal('#batchProcessorId');
 
     app.state.collection.batchMode = "ready"; //upload
+    app.uploadRequestSource = "nft";
     app.drawBatchModalUi();
     app.batchModalState = "uploadReady";
     app.batchModal.show();
 
     uploadAutoFillJustCurrentNftOptionParentId.classList.remove("hidden");
 
-    // if (!app.uploadModal) app.uploadModal = new bootstrap.Modal('#uploadModal');
-    // app.uploadModalDoneAction = app.uploadAllForCurrentAsset;
-    // app.uploadModal.show();
-}
-
-
-/*app.doUploadAllSourceFiles = function (asset) {
-    if (!app.uploadModal) app.uploadModal = new bootstrap.Modal('#uploadModal');
-
-    app.uploadModalDoneAction = app.uploadAllForCurrentAsset;
-    app.uploadModal.show();
-}*/
-
-
-app.doUpload = (asset) => {
-    // app.uploadAllSourceFiles(app.currentAsset);
 }
 
 
@@ -448,6 +438,13 @@ app.addNftIdList = (file, callback = null) => {
 
 }
 
+app.getUploadMode = () => {
+    let mode = "newOnly";
+    if (justMetadataUploadModeId && justMetadataUploadModeId.checked) mode = "metadataOnly";
+    if (overwriteUploadModeId && overwriteUploadModeId.checked) mode = "all";
+    if (uploadCurrentNFTId && uploadCurrentNFTId.checked) mode = "allNft";
+    return mode;
+}
 
 app.uploadAllSourceFiles = async function (asset, callback = null) {
 
@@ -461,28 +458,26 @@ app.uploadAllSourceFiles = async function (asset, callback = null) {
         check: (checkUploadedFirstUploadModeId && checkUploadedFirstUploadModeId.checked)
     };
 
-    let mode = "newOnly";
+    let mode = app.getUploadMode();
 
-    if (justMetadataUploadModeId && justMetadataUploadModeId.checked) mode = "metadataOnly";
-
-    if (overwriteUploadModeId && overwriteUploadModeId.checked) mode = "all";
-
-    // console.log(`[ uploadAllSourceFiles ] START - mode: ${mode} `, asset);
+    console.log(`[ uploadAllSourceFiles ] START - mode: ${mode} `, asset);
 
     await app.loadCurrentCollectionMediaImportOptions();
 
-    let needMetadataUpload = mode === "all" || mode === "metadataOnly";
+    let needMetadataUpload = mode === "all" || mode === "metadataOnly" || mode === "allNft";
 
     if (mode !== "metadataOnly") {
         for (const sourceFile of asset.metadata.buildData.sourceFiles) {
             if (sourceFile.isNftMetadata || sourceFile.filePath === "metadata.json") continue; // skip metadata for upload (uploaded later)
 
-            const uploadNeeded = await app.isUploadNeeded(sourceFile, asset, options);
-            if (!uploadNeeded) {
-                // console.log("[ uploadAllSourceFiles ] ABORTED - uploadNeeded: " + uploadNeeded);
-                continue;
+            if (mode !== "allNft" && mode !== "all") {
+                const uploadNeeded = await app.isUploadNeeded(sourceFile, asset, options);
+                if (!uploadNeeded) {
+                    console.log("[ uploadAllSourceFiles ] ABORTED - uploadNeeded: " + uploadNeeded);
+                    continue;
+                }
             }
-            // console.log("[ uploadAllSourceFiles ] UPLOAD : ", sourceFile);
+            // console.log("[ uploadAllSourceFiles ] UPLOAD ASSET: ", sourceFile);
 
             // upload metatdata if new assets are uploaded
             needMetadataUpload = true;
@@ -500,6 +495,7 @@ app.uploadAllSourceFiles = async function (asset, callback = null) {
     }
 
     if (needMetadataUpload) {
+        // console.log("[ uploadAllSourceFiles ] UPLOAD METADATA: ", asset.name);
         app.addToQueue({
             priority: 4, // same as uploadSourceFile priority or it will have to wait for all to finish 1
             action: "uploadMetadata", asset: asset
@@ -508,7 +504,8 @@ app.uploadAllSourceFiles = async function (asset, callback = null) {
         // console.log("[ uploadAllSourceFiles ] SKIPPED METADATA UPLOAD: ", asset);
     }
 
-    if (!app.uploadFilepickerData) {
+    if (!app.uploadFilepickerData && app.currentUploadProcess !== "allImported") {
+        // console.log("[ uploadAllSourceFiles ] no uploadFilepickerData! ");
         if (!app.uploadModal) app.uploadModal = new bootstrap.Modal('#uploadModal');
         app.uploadModal.show();
     } else {
@@ -706,9 +703,30 @@ app.addAllToBatch = async function () {
 
 app.startUploadAll = async function () {
 
+    await app.setUploadProcess();
+    if (app.currentUploadProcess === "allImported") {
+        await app.loadCurrentCollectionMediaImportOptions();
+        app.doUploadAll();
+        return;
+    }
+
+
+    if (app.currentUploadProcess === "singleFile") {
+        fileToUploadId.innerHTML = "<b>" + (app.currentUploadProcessFileName || "") + "</b>";
+        $('#uploadFileMessageId').removeClass("hidden");
+        $('#uploadDirectoryMessageId').addClass("hidden");
+        $("#uploadFilepicker").attr("webkitdirectory", null);
+    } else if (app.currentUploadProcess === "folder") {
+        $('#uploadFileMessageId').addClass("hidden");
+        $('#uploadDirectoryMessageId').removeClass("hidden");
+        $("#uploadFilepicker").attr("webkitdirectory", true);
+    }
+
+
     if (!app.uploadModal) app.uploadModal = new bootstrap.Modal('#uploadModal');
     app.prepareFilePickerListeners();
     app.uploadModalDoneAction = app.doUploadAll;
+
     app.uploadModal.show();
     await app.loadCurrentCollectionMediaImportOptions();
 }
@@ -716,7 +734,7 @@ app.startUploadAll = async function () {
 
 app.doUploadAll = async function () {
 
-    // console.log("[ doUploadAll ] ");
+    console.log("[ doUploadAll ] ");
 
     if (!app.state.collection.userData.nftStorageApiToken) {
         alert("Missing NFT Storage API Token");
@@ -775,52 +793,75 @@ app.doUploadAll = async function () {
 
 }
 
-//
-// app.doUploadAll = function () {
-//
-//     console.log("[ doUploadAll ] ");
-//     app.db.open().then(function () {
-//
-//
-//         // upload all "to do"
-//         // return app.db.assets
-//         //     .where(['collectionId+state'])
-//         //     .equals([app.state.collection.currentId, "ready"])
-//         //     .toArray();
-//
-//         // upload everything in a collection!
-//         return app.db.assets
-//             .where("collectionId")
-//             .equals(app.state.collection.currentId)
-//             .toArray();
-//
-//     }).then(function (assets) {
-//
-//         for (let asset of assets) {
-//             // console.log(asset);
-//
-//             app.addToQueue({
-//                 priority: 5,
-//                 action: "uploadAllSourceFiles",
-//                 asset: asset
-//             });
-//             app.doNextInQueue();
-//             // app.uploadAllSourceFiles(asset);
-//         }
-//
-//     }).catch(Dexie.MissingAPIError, function () {
-//         console.log("Couldn't find indexedDB API");
-//     });
-//
-// }
+app.getSourceFileCount = (asset) => {
+    let count = 0;
+    for (let i = 0; i < asset.metadata.buildData.sourceFiles.length; i++) {
+        if (!asset.metadata.buildData.sourceFiles[i].isNftMetadata) {
+            count++;
+            app.currentUploadProcessFileName = asset.metadata.buildData.sourceFiles[i].filePath || asset.metadata.buildData.sourceFiles[i].name;
+        }
+    }
+    return count;
+}
 
+
+app.setUploadProcess = () => {
+
+
+    return new Promise(async (resolve, reject) => {
+        let needsFilePicker = false;
+        const uploadMode = app.getUploadMode();
+
+        // check all to upload for non-imported assets
+        let assetsToCheck = [];
+        if (uploadMode === "allNft") {
+            assetsToCheck = [app.currentAsset];
+        } else if (uploadMode === "all" || uploadMode === "newOnly") {
+            assetsToCheck = await app.db.assets
+                .where("collectionId")
+                .equals(app.state.collection.currentId)
+                .toArray();
+        }
+
+        console.log(`[ setUploadProcess ] check all to upload for non-imported assets assetsToCheck:`, assetsToCheck);
+        // need the file picker?
+        for (let i = 0; i < assetsToCheck.length; i++) {
+            if (assetsToCheck[i].metadata.buildData.sourceFiles) {
+                if (needsFilePicker) break;
+                for (let j = 0; j < assetsToCheck[i].metadata.buildData.sourceFiles.length; j++) {
+                    console.log(`[ setUploadProcess ] len:`, assetsToCheck[i].metadata.buildData.sourceFiles[j]);
+                    if (assetsToCheck[i].metadata.buildData.sourceFiles[j].isNftMetadata !== true && !assetsToCheck[i].metadata.buildData.sourceFiles[j].thumb) {
+                        needsFilePicker = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (!needsFilePicker) {
+            app.currentUploadProcess = "allImported";
+        } else {
+
+            app.currentUploadProcess = "folder";
+            if (uploadCurrentNFTId && uploadCurrentNFTId.checked) {
+                if (app.uploadRequestSource === "nft" && app.currentAsset) {
+                    if (app.getSourceFileCount(app.currentAsset) === 1) {
+                        app.currentUploadProcess = "singleFile";
+                    }
+                }
+            }
+        }
+
+        console.log(`[ setUploadProcess ] uploadRequestSource: ${app.uploadRequestSource} - currentUploadProcess: ${app.currentUploadProcess}`);
+        resolve();
+    });
+}
 
 app.doStartUploadAll = function () {
     // console.log("[ doStartAutoFillAll ] ");
     uploadAutoFillJustCurrentNftOptionParentId.classList.add("hidden")
     app.changeBatchProcessingView("Upload");
 }
-
 
 app.doAddAllToBatch = function () {
     app.changeBatchProcessingView("Apply Selection to Batch");
@@ -991,7 +1032,6 @@ app.updateAssetReferences = function (asset) {
     // console.log("[ updateAssetReferences ] app.state.collection.mediaImportOptions: ", app.state.collection.mediaImportOptions);
     console.log("[ updateAssetReferences ] asset: ", asset);
 
-    // if (!asset.metadata.data) asset.metadata.data = JSON.parse(JSON.stringify(app.defaultMetadataDataNode));
 
     // make a copy of the default data
     asset.metadata.data = JSON.parse(JSON.stringify(app.defaultMetadataDataNode));
@@ -1032,6 +1072,7 @@ app.updateAssetReferences = function (asset) {
                 console.log("[ updateAssetReferences ] rule: ", rules);
 
                 asset.metadata.buildData.sourceFiles[i].isThumbnail = rules.isThumbnail;
+
                 if (rules.isMain) {
                     // only allow a single main file
                     mainCount++
@@ -1041,7 +1082,7 @@ app.updateAssetReferences = function (asset) {
                 }
                 asset.metadata.buildData.sourceFiles[i].isLink = rules.isLink;
             } else {
-                // console.log("[ updateAssetReferences ] NO RULES!!!!!!!!!!!: ", asset.metadata.buildData.sourceFiles[i].filePath);
+                console.log("[ updateAssetReferences ] NO RULES!!!!!!!!!!!: ", asset.metadata.buildData.sourceFiles[i].filePath);
             }
 
             /*
@@ -1072,8 +1113,7 @@ app.updateAssetReferences = function (asset) {
                 // console.log("[ updateAssetReferences ] FOUND MAIN: " + fileType);
                 asset.metadata.data["@type"] = app.getSchemaFileType(asset.metadata.buildData.sourceFiles[i].type);
 
-                if (asset.metadata.buildData.sourceFiles[i].type)
-                    asset.metadata.data["encodingFormat"] = asset.metadata.buildData.sourceFiles[i].type;
+                if (asset.metadata.buildData.sourceFiles[i].type) asset.metadata.data["encodingFormat"] = asset.metadata.buildData.sourceFiles[i].type;
 
                 if (asset.metadata.buildData.sourceFiles[i].size) asset.metadata.data["contentSize"] = app.formatSizeUnits(asset.metadata.buildData.sourceFiles[i].size);
 
@@ -1094,8 +1134,7 @@ app.updateAssetReferences = function (asset) {
 
             let template = app.thumbnailMetadataTemplate;
 
-            if (!asset.metadata.buildData.sourceFiles[i].height || isNaN(asset.metadata.buildData.sourceFiles[i].height))
-                template = app.mediaMetadataTemplate;
+            if (!asset.metadata.buildData.sourceFiles[i].height || isNaN(asset.metadata.buildData.sourceFiles[i].height)) template = app.mediaMetadataTemplate;
 
             template = template.replace(/FILE_NAME/g, app.getFileName(asset.metadata.buildData.sourceFiles[i].filePath));
             template = template.replace(/FILE_TYPE/g, app.getSchemaFileType(app.getFileType(filename)));
@@ -1109,8 +1148,7 @@ app.updateAssetReferences = function (asset) {
 
             let json = JSON.parse(template);
 
-            if (asset.metadata.buildData.sourceFiles[i].type)
-                json.encodingFormat = asset.metadata.buildData.sourceFiles[i].type;
+            if (asset.metadata.buildData.sourceFiles[i].type) json.encodingFormat = asset.metadata.buildData.sourceFiles[i].type;
 
             if (rules && rules.isThumbnail === true) {
 
@@ -1385,21 +1423,21 @@ app.checkUploadedFile = (sourceFile, asset) => {
 
 app.uploadSourceFile = async (sourceFile, asset, options, callback = null) => {
 
-    const uploadNeeded = await app.isUploadNeeded(sourceFile, asset, options);
-    if (!uploadNeeded) {
-        // console.log("[ uploadSourceFile ] ABORTED - uploadNeeded: " + uploadNeeded);
-        if (callback !== null) callback();
-        return;
-    }
-
+    // This happens earlier now.
+    /* const uploadNeeded = await app.isUploadNeeded(sourceFile, asset, options);
+     if (!uploadNeeded) {
+         console.log("[ uploadSourceFile ] ABORTED - uploadNeeded: " + uploadNeeded);
+         if (callback !== null) callback();
+         return;
+     }*/
 
     // console.log("[ uploadSourceFile ] sourceFile: ", sourceFile);
     // console.log("[ uploadSourceFile ] asset: ", asset);
 
     let file = sourceFile;
     if (!sourceFile.thumb) {
-        // console.log("[ uploadSourceFile ] NO IMPORTED DATA TO UPLOAD");
-        // console.log(sourceFile);
+        console.log("[ uploadSourceFile ] NO IMPORTED DATA TO UPLOAD");
+        console.log(sourceFile);
 
 
         if (sourceFile.hash) {
@@ -1419,31 +1457,29 @@ app.uploadSourceFile = async (sourceFile, asset, options, callback = null) => {
         }
 
     } else {
+        console.log("[ uploadSourceFile ] USING IMPORTED DATA TO UPLOAD sourceFile: ", sourceFile);
         file = sourceFile.thumb || file;
     }
 
     // used for the UI queue display
     app.currentlyUploadingFileName = sourceFile.name || app.getFileName(sourceFile.filePath);
 
-    // console.log("[ uploadSourceFile ] file: ", file);
+    if (!file) {
+        console.log("[ uploadSourceFile ] file missing: ", file);
+        return;
+        if (callback !== null) callback();
+    }
 
     $.ajax({
-        type: "POST",
-        url: "https://api.nft.storage/upload",
-        data: file,
-        xhr: function () {
+        type: "POST", url: "https://api.nft.storage/upload", data: file, xhr: function () {
             let myXhr = $.ajaxSettings.xhr();
             if (myXhr.upload) {
                 myXhr.upload.addEventListener('progress', app.uploadProgress, false);
             }
             return myXhr;
-        },
-        contentType: false,
-        processData: false,
-        headers: {
+        }, contentType: false, processData: false, headers: {
             "Authorization": "Bearer " + app.state.collection.userData.nftStorageApiToken, "Content-Type": file.type
-        },
-        success: async function (result) {
+        }, success: async function (result) {
 
             sourceFile.ipfs = 'https://' + result.value.cid + ".ipfs.nftstorage.link"
             sourceFile.fileStatus.isUploaded = true;
@@ -1462,10 +1498,9 @@ app.uploadSourceFile = async (sourceFile, asset, options, callback = null) => {
                 });
 
 
-        },
-        error: function (error) {
-            console.log("error")
-            console.log(error);
+        }, error: function (error) {
+            // console.log("error")
+            // console.log(error);
             if (callback !== null) callback();
         }
     });

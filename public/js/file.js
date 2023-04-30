@@ -33,7 +33,7 @@ app.loadDefaultFile = function (file) {
     // read the json
     const reader = new FileReader();
     reader.addEventListener("load", async () => {
-        console.log('[ loadDefaultFile ]', reader.result);
+        // console.log('[ loadDefaultFile ]', reader.result);
         app.state.collection.userData = JSON.parse(reader.result);
         await app.saveCurrentCollectionReportToDb();
         app.copyDataToForm(app.state.collection.userData, "loadDefaultFile");

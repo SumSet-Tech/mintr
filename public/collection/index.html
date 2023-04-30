@@ -371,8 +371,7 @@
     <div id="resizeDividerId" class="b-example-divider b-example-vr"></div>
 
 
-    <div id="panelContainerId" class="d-flex flex-column align-items-stretch flex-shrink-0 pt-2 bg-light"
-         style="width: 400px;">
+    <div id="panelContainerId" class="d-flex flex-column align-items-stretch flex-shrink-0 pt-2 bg-light">
 
         <div class="d-flex align-items-center flex-shrink-0 ps-3 pe-3 pt-3 link-dark text-decoration-none border-bottom">
             <nav>
@@ -423,6 +422,30 @@
 
                     </button>
 
+
+                    <button class="nav-link" id="mint-tab"
+                            data-bs-toggle="tab"
+                            type="button" role="tab"
+                            data-bs-target="#mint-panel"
+                            aria-controls="mint-panel"
+                            aria-selected="false" tabindex="-1">
+
+                        <div class="row">
+
+                            <div class="col-1">
+                                <svg class="bi me-1" width="24" height="24">
+                                    <use xlink:href="#mintbatch"></use>
+                                </svg>
+                            </div>
+                            <div class="col">
+                                <span>Mint</span>
+                            </div>
+
+                        </div>
+
+                    </button>
+
+
                 </div>
             </nav>
         </div>
@@ -431,7 +454,6 @@
             <div class=" flex-column mb-auto">
 
                 <div class="container ">
-
 
                     <div class="tab-pane fade active show pt-3" id="collection-editor"
                          role="tabpanel"
@@ -600,49 +622,6 @@
                                                 </div>
                                             </div>
 
-                                            <hr>
-
-
-                                            <table class="table">
-                                                <tbody>
-                                                <tr id="batchesRowId">
-                                                    <td colspan="3">
-                                                        <br>
-                                                        <h5>
-                                                            <svg class="bi buttonSvg " width="25" height="25">
-                                                                <use xlink:href="#mintbatch"></use>
-                                                            </svg>
-                                                            <span class="mt-1">Batches</span>
-                                                        </h5>
-                                                        <div>
-                                                            <div id="batchListBlankMessageId"
-                                                                 class="col mt-3 mb-3 noselect">
-                                                                <div class="p-2 bg-body-secondary border rounded-3 ">
-                                                                    <div class="row ps-3 pe-3">
-                                                                        No batches yet.
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <table id="batchListTableId"
-                                                                   class="table table-striped noselect">
-                                                                <thead>
-                                                                <tr>
-                                                                    <th>Name</th>
-                                                                    <th>Created</th>
-                                                                    <th>Items</th>
-                                                                    <th>Actions</th>
-
-                                                                </tr>
-                                                                </thead>
-                                                                <tbody id="collectionEditorBatchesId"
-                                                                       class="align-middle"></tbody>
-                                                            </table>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
 
                                         </div>
 
@@ -1208,6 +1187,47 @@
                                                             </div>
 
                                                             <!-- License Tab Content -->
+                                                            <!-- <div class="tab-pane fade" id="nav-license"
+                                                                  role="tabpanel"
+                                                                  aria-labelledby="nav-license-tab">
+
+                                                                 <div class="d-grid gap-3">
+
+
+
+
+                                                                     <div class="tab-pane fade"
+                                                                          id="licenses_-custom"
+                                                                          role="tabpanel"
+                                                                          aria-labelledby="licenses_-custom-tab">
+
+                                                                         <div class="form-floating mb-3">
+                                                                             <input type="text"
+                                                                                    class="form-control floatingTextField required"
+                                                                                    id="licenseHashId"
+                                                                                    placeholder="">
+                                                                             <label for="licenseHashId"
+                                                                                    id="licenseHashLabelId">License
+                                                                                 Hash
+                                                                             </label>
+                                                                         </div>
+
+                                                                         <div id="licensesListId"></div>
+
+                                                                         <div class="form-floating mb-3">
+                                                                             <button id="addLicenseButtonId"
+                                                                                     type="button"
+                                                                                     class="btn btn-primary btn-sm fillSpace">
+                                                                                 Add License URI (+)
+                                                                             </button>
+                                                                         </div>
+
+                                                                     </div>
+
+                                                                 </div>
+                                                             </div>-->
+
+
                                                             <div class="tab-pane fade" id="nav-license"
                                                                  role="tabpanel"
                                                                  aria-labelledby="nav-license-tab">
@@ -1216,68 +1236,100 @@
 
 
                                                                     <div>
-
-
-                                                                        <div class="accordion-body">
-
-                                                                            <div class="d-grid gap-3">
-
-                                                                                <form id="license-upload"
-                                                                                      enctype="multipart/form-data">
-                                                                                    <div class="form group">
-                                                                                        <input type="file"
-                                                                                               class="form-control"
-                                                                                               id="licenseFileId"
-                                                                                               aria-describedby="nftFileHelp"
-                                                                                               placeholder=""
-                                                                                               onchange="app.openLicenseFile(event)">
-                                                                                    </div>
-                                                                                </form>
-
-                                                                                <button id="uploadLicenseToIpfsId"
-                                                                                        type="button"
-                                                                                        class="btn btn-primary"
-                                                                                        onclick="app.uploadLicenseToIpfs()">
-                                                                                    Upload
+                                                                        <nav>
+                                                                            <div class="nav nav-tabs mb-3 noselect"
+                                                                                 id="licenses_-tab"
+                                                                                 role="tablist">
+                                                                                <button class="nav-link active"
+                                                                                        id="licenses_-basic-tab"
+                                                                                        data-bs-toggle="tab"
+                                                                                        data-bs-target="#licenses_-basic"
+                                                                                        type="button" role="tab"
+                                                                                        aria-controls="licenses_-basic"
+                                                                                        aria-selected="true">Upload
                                                                                 </button>
+                                                                                <button class="nav-link"
+                                                                                        id="licenses_-custom-tab"
+                                                                                        data-bs-toggle="tab"
+                                                                                        data-bs-target="#licenses_-custom"
+                                                                                        type="button" role="tab"
+                                                                                        aria-controls="licenses_-custom"
+                                                                                        aria-selected="false"
+                                                                                        tabindex="-1">
+                                                                                    Edit
+                                                                                </button>
+                                                                            </div>
+                                                                        </nav>
+                                                                        <div class="tab-content">
 
-                                                                                <div id="licenseAlertId"
-                                                                                     class="scrollOverflow"></div>
+                                                                            <div class="tab-pane fade active show"
+                                                                                 id="licenses_-basic"
+                                                                                 role="tabpanel"
+                                                                                 aria-labelledby="licenses_-basic-tab">
+
+                                                                                <div class="accordion-body">
+
+                                                                                    <div class="d-grid gap-3">
+
+                                                                                        <form id="license-upload"
+                                                                                              enctype="multipart/form-data">
+                                                                                            <div class="form group">
+                                                                                                <input type="file"
+                                                                                                       class="form-control"
+                                                                                                       id="licenseFileId"
+                                                                                                       aria-describedby="nftFileHelp"
+                                                                                                       placeholder=""
+                                                                                                       onchange="app.openLicenseFile(event)">
+                                                                                            </div>
+                                                                                        </form>
+
+                                                                                        <button id="uploadLicenseToIpfsId"
+                                                                                                type="button"
+                                                                                                class="btn btn-primary"
+                                                                                                onclick="app.uploadLicenseToIpfs()">
+                                                                                            Upload
+                                                                                        </button>
+
+                                                                                        <div id="licenseAlertId"
+                                                                                             class="scrollOverflow"></div>
+
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+
+                                                                            <div class="tab-pane fade"
+                                                                                 id="licenses_-custom"
+                                                                                 role="tabpanel"
+                                                                                 aria-labelledby="licenses_-custom-tab">
+
+                                                                                <div class="form-floating mb-3">
+                                                                                    <input type="text"
+                                                                                           class="form-control floatingTextField required"
+                                                                                           id="licenseHashId"
+                                                                                           placeholder="">
+                                                                                    <label for="licenseHashId"
+                                                                                           id="licenseHashLabelId">License
+                                                                                        Hash
+                                                                                    </label>
+                                                                                </div>
+
+                                                                                <div id="licensesListId"></div>
+
+                                                                                <div class="form-floating mb-3">
+                                                                                    <button id="addLicenseButtonId"
+                                                                                            type="button"
+                                                                                            class="btn btn-primary btn-sm fillSpace">
+                                                                                        Add License URI (+)
+                                                                                    </button>
+                                                                                </div>
 
                                                                             </div>
                                                                         </div>
                                                                     </div>
-
-                                                                    <div class="tab-pane fade"
-                                                                         id="licenses_-custom"
-                                                                         role="tabpanel"
-                                                                         aria-labelledby="licenses_-custom-tab">
-
-                                                                        <div class="form-floating mb-3">
-                                                                            <input type="text"
-                                                                                   class="form-control floatingTextField required"
-                                                                                   id="licenseHashId"
-                                                                                   placeholder="">
-                                                                            <label for="licenseHashId"
-                                                                                   id="licenseHashLabelId">License
-                                                                                Hash
-                                                                            </label>
-                                                                        </div>
-
-                                                                        <div id="licensesListId"></div>
-
-                                                                        <div class="form-floating mb-3">
-                                                                            <button id="addLicenseButtonId"
-                                                                                    type="button"
-                                                                                    class="btn btn-primary btn-sm fillSpace">
-                                                                                Add License URI (+)
-                                                                            </button>
-                                                                        </div>
-
-                                                                    </div>
                                                                 </div>
-                                                            </div>
 
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1348,529 +1400,527 @@
                             </div>
                         </div>
 
-
                     </div>
 
-                </div>
+                    <div class="tab-pane fade pt-3 ps-0 pe-0" id="nft-editor" role="tabpanel"
+                         aria-labelledby="nav-nft-tab">
 
-                <div class="tab-pane fade pt-3 ps-3 pe-3" id="nft-editor"
-                     role="tabpanel"
-                     aria-labelledby="nav-nft-tab">
-
-                    <div id="nftEditorBlankMessageId" class="col mb-3 noselect">
-                        <div class="p-2 bg-body-secondary border rounded-3 ">
-                            <div class="row ps-3 pe-3">
-                                No NFT selected.
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="nftEditorPanelId"
-                         class="hidden d-flex flex-column align-items-stretch flex-shrink-0  bg-light">
-                        <div class="col mb-3">
+                        <div id="nftEditorBlankMessageId" class="col mb-3 noselect">
                             <div class="p-2 bg-body-secondary border rounded-3 ">
-                                <div class="row ">
-
-                                    <table>
-                                        <tr>
-                                            <td style="width:5.5em" class="ps-2">
-                                                <img id="nftEditorImageId"
-                                                     width="100%" crossorigin="anonymous" alt=""
-                                                     class="ps-1"
-                                                     src="/img/placeholder_image.svg"/>
-                                            </td>
-                                            <td class="p-2" style="vertical-align: top">
-                                                <p class="p-0 m-0 noselect">Editing NFT:</p>
-                                                <h5 id="nftEditorNameId" class="p-0 m-0"></h5>
-                                            </td>
-                                        </tr>
-                                    </table>
-
-
+                                <div class="row ps-3 pe-3">
+                                    No NFT selected.
                                 </div>
                             </div>
                         </div>
 
+                        <div id="nftEditorPanelId"
+                             class="hidden d-flex flex-column align-items-stretch flex-shrink-0  bg-light">
 
-                        <nav>
-                            <div class="nav nav-tabs mb-3 noselect" id="nft-editor-subtab" role="tablist">
+                            <div class="col mb-3">
+                                <div class="p-2 bg-body-secondary border rounded-3 ">
+                                    <div class="row ">
 
-                                <button class="nav-link  active" id="nft-editor-home-tab"
-                                        data-bs-toggle="tab"
-                                        data-bs-target="#nft-editor-subtab-content" type="button" role="tab"
-                                        aria-controls="nft-editor-subtab-content" aria-selected="true">
-                                    Process
-                                </button>
-                                <button class="nav-link " id="nft-editor-edit-tab"
-                                        data-bs-toggle="tab"
-                                        data-bs-target="#nft-editor-edit-tab-content" type="button"
-                                        role="tab"
-                                        aria-controls="nft-editor-edit-tab-content" aria-selected="false"
-                                        tabindex="-1">Edit
-                                </button>
-                                <button class="nav-link" id="nft-editor-onchain-tab"
-                                        data-bs-toggle="tab"
-                                        data-bs-target="#nav-preview" type="button" role="tab"
-                                        aria-controls="nav-preview" aria-selected="false"
-                                        tabindex="-1">Preview
-                                </button>
-                                <button class="nav-link" id="nav-admin-tab" data-bs-toggle="tab"
-                                        data-bs-target="#nav-admin" type="button" role="tab"
-                                        aria-controls="nav-admin"
-                                        aria-selected="false" tabindex="-1">Admin
-                                </button>
+                                        <table>
+                                            <tr>
+                                                <td style="width:5.5em" class="ps-2">
+                                                    <img id="nftEditorImageId"
+                                                         width="100%" crossorigin="anonymous" alt=""
+                                                         class="ps-1"
+                                                         src="/img/placeholder_image.svg"/>
+                                                </td>
+                                                <td class="p-2" style="vertical-align: top">
+                                                    <p class="p-0 m-0 noselect">Editing NFT:</p>
+                                                    <h5 id="nftEditorNameId" class="p-0 m-0"></h5>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+
+                                    </div>
+                                </div>
                             </div>
-                        </nav>
+
+                            <nav>
+                                <div class="nav nav-tabs mb-3 noselect" id="nft-editor-subtab" role="tablist">
+
+                                    <button class="nav-link  active" id="nft-editor-home-tab"
+                                            data-bs-toggle="tab"
+                                            data-bs-target="#nft-editor-subtab-content" type="button" role="tab"
+                                            aria-controls="nft-editor-subtab-content" aria-selected="true">
+                                        Process
+                                    </button>
+                                    <button class="nav-link " id="nft-editor-edit-tab"
+                                            data-bs-toggle="tab"
+                                            data-bs-target="#nft-editor-edit-tab-content" type="button"
+                                            role="tab"
+                                            aria-controls="nft-editor-edit-tab-content" aria-selected="false"
+                                            tabindex="-1">Edit
+                                    </button>
+                                    <button class="nav-link" id="nft-editor-onchain-tab"
+                                            data-bs-toggle="tab"
+                                            data-bs-target="#nav-preview" type="button" role="tab"
+                                            aria-controls="nav-preview" aria-selected="false"
+                                            tabindex="-1">Preview
+                                    </button>
+                                    <button class="nav-link" id="nav-admin-tab" data-bs-toggle="tab"
+                                            data-bs-target="#nav-admin" type="button" role="tab"
+                                            aria-controls="nav-admin"
+                                            aria-selected="false" tabindex="-1">Admin
+                                    </button>
+                                </div>
+                            </nav>
+
+                            <div class="tab-content list-group list-group-flush border-bottom scrollarea noselect">
+
+                                <!-- TAB PANE -->
+                                <div class="tab-pane fade active show  pt-1 ps-3 pe-3" id="nft-editor-subtab-content"
+                                     role="tabpanel"
+                                     aria-labelledby="nft-editor-subtab-content-tab">
+
+                                    <div>
+
+                                        <div class="tab-pane fade show active noselect" id="nft-process"
+                                             role="tabpanel"
+                                             aria-labelledby="collection-process-tab" tabindex="0">
 
 
-                        <div class="tab-content list-group list-group-flush border-bottom scrollarea noselect">
-
-                            <!-- TAB PANE -->
-                            <div class="tab-pane fade active show  pt-1 ps-3 pe-3" id="nft-editor-subtab-content"
-                                 role="tabpanel"
-                                 aria-labelledby="nft-editor-subtab-content-tab">
-
-                                <div>
-
-                                    <div class="tab-pane fade show active noselect" id="nft-process"
-                                         role="tabpanel"
-                                         aria-labelledby="collection-process-tab" tabindex="0">
-
-
-                                        <div class="row mt-3">
-                                            <div class="d-flex flex-column">
-                                                <p>
-                                                    Add files for this NFT
-                                                </p>
+                                            <div class="row mt-3">
+                                                <div class="d-flex flex-column">
+                                                    <p>
+                                                        Add files for this NFT
+                                                    </p>
+                                                </div>
                                             </div>
+
+                                            <div class="row">
+                                                <div class="d-flex flex-column">
+                                                    <button type="button" class="btn btn-outline-primary"
+                                                            id="nftEditorAddFilesButtonId">
+                                                        <svg class="fill-current-color pe-none" width="25"
+                                                             height="25">
+                                                            <use xlink:href="#folderupload"></use>
+                                                        </svg>&nbsp;
+                                                        Add Files
+                                                    </button>
+
+                                                </div>
+                                            </div>
+
+                                            <hr>
+
+                                            <div class="row mt-3">
+                                                <div class="d-flex flex-column">
+                                                    <p>Use the metadata from this collection for this NFT</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="d-flex flex-column">
+                                                    <button id="nftAutoFillButtonId" type="button"
+                                                            class="btn btn-outline-primary full-width">
+                                                        <svg class="fill-current-color pe-none" width="25"
+                                                             height="25">
+                                                            <use xlink:href="#autofix"></use>
+                                                        </svg>&nbsp;Update Metadata
+                                                    </button>
+
+                                                </div>
+                                            </div>
+
+                                            <hr>
+
+                                            <div class="row mt-3">
+                                                <div class="d-flex flex-column">
+                                                    <p>
+                                                        Upload the assets and metadata for this NFT
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="d-flex flex-column">
+                                                    <button id="nftUploadButtonId" type="button"
+                                                            class="btn btn-outline-primary disabled full-width">
+                                                        <svg class="fill-current-color pe-none" width="25"
+                                                             height="25">
+                                                            <use xlink:href="#cloudupload"></use>
+                                                        </svg>&nbsp;Upload to IPFS
+                                                    </button>
+
+                                                </div>
+                                            </div>
+
+                                            <hr>
+
+
                                         </div>
 
-                                        <div class="row">
-                                            <div class="d-flex flex-column">
-                                                <button type="button" class="btn btn-outline-primary"
-                                                        id="nftEditorAddFilesButtonId">
-                                                    <svg class="fill-current-color pe-none" width="25"
-                                                         height="25">
-                                                        <use xlink:href="#folderupload"></use>
-                                                    </svg>&nbsp;
-                                                    Add Files
+
+                                        <table class="table">
+                                            <tbody>
+                                            <tr id="filesRowId">
+                                                <td colspan="3 mt-5">
+                                                    <h5 class="mb-1">Files</h5>
+                                                    <p class="mb-0"><i>These files are used in this NFT.</i></p>
+                                                    <div id="fileListBlankMessageId"
+                                                         class="col mt-0 mb-3 noselect">
+                                                        <div class="p-2 bg-body-secondary border rounded-3 ">
+                                                            <div class="row ps-3 pe-3">
+                                                                No files yet.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <table id="fileListId" class="table table-striped">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>Type</th>
+                                                            <th>Filename</th>
+                                                            <th>Status</th>
+                                                            <th>Usage</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody id="nftEditorFilesId"></tbody>
+                                                    </table>
+
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                    &nbsp;
+                                </div>
+
+
+                                <!-- TAB PANE -->
+                                <div class="tab-pane fade ps-3 pe-3 pt-3" id="nft-editor-edit-tab-content"
+                                     role="tabpanel"
+                                     aria-labelledby="nav-json-tab">
+
+                                    <div>
+
+                                        <nav>
+                                            <div class="nav nav-tabs mb-3 noselect" role="tablist">
+                                                <button class="nav-link active" id="nav-basic-tab"
+                                                        data-bs-toggle="tab"
+                                                        data-bs-target="#nav-basic" type="button" role="tab"
+                                                        aria-controls="nav-basic"
+                                                        aria-selected="true">Basic
                                                 </button>
-
-                                            </div>
-                                        </div>
-
-                                        <hr>
-
-                                        <div class="row mt-3">
-                                            <div class="d-flex flex-column">
-                                                <p>Use the metadata from this collection for this NFT</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="d-flex flex-column">
-                                                <button id="nftAutoFillButtonId" type="button"
-                                                        class="btn btn-outline-primary full-width">
-                                                    <svg class="fill-current-color pe-none" width="25"
-                                                         height="25">
-                                                        <use xlink:href="#autofix"></use>
-                                                    </svg>&nbsp;Update Metadata
+                                                <button class="nav-link" id="nav-traits-tab"
+                                                        data-bs-toggle="tab"
+                                                        data-bs-target="#nav-traits" type="button" role="tab"
+                                                        aria-controls="nav-traits"
+                                                        aria-selected="false" tabindex="-1">Traits
                                                 </button>
+                                            </div>
+                                        </nav>
+
+                                        <div class="tab-content">
+                                            <div class="tab-pane fade active show" id="nav-basic"
+                                                 role="tabpanel"
+                                                 aria-labelledby="nav-basic-tab">
+                                                <div class="form-floating mb-3">
+                                                    <input type="text"
+                                                           class="form-control floatingTextField required"
+                                                           id="nftNameId"
+                                                           placeholder="">
+                                                    <label for="nftNameId" id="nftNameLabelId">Name</label>
+                                                </div>
+                                                <div class="form-floating mb-3">
+                                                    <input type="text"
+                                                           class="form-control floatingTextField required"
+                                                           id="nftDescriptionId"
+                                                           placeholder="">
+                                                    <label for="nftDescriptionId"
+                                                           id="nftDescriptionLabelId">Description</label>
+                                                </div>
+                                                <div class="form-floating mb-3">
+                                                    <div>
+                                                        <input type="checkbox" class="form-check-input"
+                                                               id="nftIsSensitiveId">
+                                                        <label class="form-check-label" for="nftIsSensitiveId"
+                                                               id="nftIsSensitiveLabelId">
+                                                            Is sensitive</label>
+                                                    </div>
+                                                </div>
+
+                                                <hr>
+
+                                                <div class="row g-5">
+
+                                                    <div class="col-md-6">
+
+                                                        <div class="form-floating mb-3">
+                                                            <input type="text"
+                                                                   class="form-control floatingTextField"
+                                                                   id="seriesNumberId"
+                                                                   placeholder="">
+                                                            <label for="seriesNumberId"
+                                                                   id="seriesNumberLabelId">Series
+                                                                Number</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+
+                                                        <div class="form-floating mb-3">
+                                                            <input type="text"
+                                                                   class="form-control floatingTextField"
+                                                                   id="seriesTotalId"
+                                                                   placeholder="">
+                                                            <label for="seriesTotalId" id="seriesTotalLabelId">Series
+                                                                Total</label>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="tab-pane fade" id="nav-traits" role="tabpanel"
+                                                 aria-labelledby="nav-traits-tab">
+
+                                                <div id="traitsListId"></div>
+
+                                                <div class="form-floating mb-3">
+                                                    <button id="addTraitButtonId" type="button"
+                                                            class="btn btn-primary btn-sm fillSpace">
+                                                        Add Trait (+)
+                                                    </button>
+                                                </div>
 
                                             </div>
+
                                         </div>
-
-                                        <hr>
-
-                                        <div class="row mt-3">
-                                            <div class="d-flex flex-column">
-                                                <p>
-                                                    Upload the assets and metadata for this NFT
-                                                </p>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="d-flex flex-column">
-                                                <button id="nftUploadButtonId" type="button"
-                                                        class="btn btn-outline-primary disabled full-width">
-                                                    <svg class="fill-current-color pe-none" width="25"
-                                                         height="25">
-                                                        <use xlink:href="#cloudupload"></use>
-                                                    </svg>&nbsp;Upload to IPFS
-                                                </button>
-
-                                            </div>
-                                        </div>
-
-                                        <hr>
-
 
                                     </div>
 
 
-                                    <table class="table">
-                                        <tbody>
-                                        <tr id="filesRowId">
-                                            <td colspan="3 mt-5">
-                                                <h5 class="mb-1">Files</h5>
-                                                <p class="mb-0"><i>These files are used in this NFT.</i></p>
-                                                <div id="fileListBlankMessageId"
-                                                     class="col mt-0 mb-3 noselect">
-                                                    <div class="p-2 bg-body-secondary border rounded-3 ">
-                                                        <div class="row ps-3 pe-3">
-                                                            No files yet.
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <table id="fileListId" class="table table-striped">
-                                                    <thead>
-                                                    <tr>
-                                                        <th>Type</th>
-                                                        <th>Filename</th>
-                                                        <th>Status</th>
-                                                        <th>Usage</th>
-                                                        <th>Action</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody id="nftEditorFilesId"></tbody>
-                                                </table>
-
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-
                                 </div>
-                                &nbsp;
-                            </div>
+
+                                <!-- TAB PANE -->
+                                <div class="tab-pane fade ps-3 pe-3 pt-3" id="nav-preview" role="tabpanel"
+                                     aria-labelledby="nav-json-tab">
 
 
-                            <!-- TAB PANE -->
-                            <div class="tab-pane fade ps-3 pe-3 pt-3" id="nft-editor-edit-tab-content" role="tabpanel"
-                                 aria-labelledby="nav-json-tab">
-
-                                <div>
+                                    <!-- Uploaded Image Preview -->
+                                    <img class="bd-placeholder-img card-img-top mb-3" id="mainImagePreviewId">
 
                                     <nav>
-                                        <div class="nav nav-tabs mb-3 noselect" role="tablist">
-                                            <button class="nav-link active" id="nav-basic-tab"
+                                        <div class="nav nav-tabs mb-3 noselect" id="metadata-tab"
+                                             role="tablist">
+                                            <button class="nav-link active" id="metadata-home-tab"
                                                     data-bs-toggle="tab"
-                                                    data-bs-target="#nav-basic" type="button" role="tab"
-                                                    aria-controls="nav-basic"
-                                                    aria-selected="true">Basic
+                                                    data-bs-target="#nav-home" type="button" role="tab"
+                                                    aria-controls="nav-home" aria-selected="true">Summary
                                             </button>
-                                            <button class="nav-link" id="nav-traits-tab"
+                                            <button class="nav-link" id="metadata-onchain-tab"
                                                     data-bs-toggle="tab"
-                                                    data-bs-target="#nav-traits" type="button" role="tab"
-                                                    aria-controls="nav-traits"
-                                                    aria-selected="false" tabindex="-1">Traits
+                                                    data-bs-target="#nav-onchain" type="button" role="tab"
+                                                    aria-controls="nav-onchain" aria-selected="false"
+                                                    tabindex="-1">On–Chain
+                                            </button>
+                                            <button class="nav-link" id="metadata-json-tab" data-bs-toggle="tab"
+                                                    data-bs-target="#nav-json" type="button" role="tab"
+                                                    aria-controls="nav-json" aria-selected="false"
+                                                    tabindex="-1">Metadata
                                             </button>
                                         </div>
                                     </nav>
 
-                                    <div class="tab-content">
-                                        <div class="tab-pane fade active show" id="nav-basic"
-                                             role="tabpanel"
-                                             aria-labelledby="nav-basic-tab">
-                                            <div class="form-floating mb-3">
-                                                <input type="text"
-                                                       class="form-control floatingTextField required"
-                                                       id="nftNameId"
-                                                       placeholder="">
-                                                <label for="nftNameId" id="nftNameLabelId">Name</label>
+                                    <div class="tab-content" id="metadata-tabContent">
+                                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+                                             aria-labelledby="nav-home-tab">
+
+
+                                            <div class="previewHeader">Name</div>
+                                            <div class="previewValue" id="previewNameId"></div>
+
+                                            <div class="previewHeader">Description</div>
+                                            <div class="previewValue" id="previewDescriptionId"></div>
+
+                                            <div class="previewHeader">Is Sensitive</div>
+                                            <div class="previewValue" id="previewIsSensitiveId"></div>
+
+                                            <div class="previewHeader">NFT Id</div>
+                                            <div class="previewValue" id="previewNftId"></div>
+
+
+                                            <div id="previewTraitsTable" class="hidden">
+                                                <hr>
+
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                    <tr>
+
+                                                        <th>Trait Type</th>
+                                                        <th>Value</th>
+                                                        <th>Min/Max</th>
+                                                        <th>Rarity</th>
+                                                    </tr>
+
+                                                    </thead>
+                                                    <tbody id="previewTraitsId"></tbody>
+                                                </table>
+
                                             </div>
-                                            <div class="form-floating mb-3">
-                                                <input type="text"
-                                                       class="form-control floatingTextField required"
-                                                       id="nftDescriptionId"
-                                                       placeholder="">
-                                                <label for="nftDescriptionId"
-                                                       id="nftDescriptionLabelId">Description</label>
+
+                                            <div class="previewHeader">Collection Id</div>
+                                            <div class="previewValue" id="previewCollectionIdId"></div>
+
+                                            <div class="previewHeader">Collection Name</div>
+                                            <div class="previewValue" id="previewCollectionNameId"></div>
+
+                                            <div class="previewHeader">Collection Description</div>
+                                            <div class="previewValue" id="previewCollectionDescriptionId"></div>
+
+                                            <hr>
+
+                                            <div id="previewCollectionOptionalId"></div>
+
+                                        </div>
+                                        <div class="tab-pane fade" id="nav-json" role="tabpanel"
+                                             aria-labelledby="nav-json-tab">
+
+                                            <p id="previewJsonId" class="pre selectable"></p>
+                                        </div>
+                                        <div class="tab-pane fade" id="nav-onchain" role="tabpanel"
+                                             aria-labelledby="nav-onchain-tab">
+
+                                            <h6>Asset</h6>
+                                            <div class="previewHeader">Source Filename</div>
+                                            <div class="previewValue" id="previewSourceImageFileNameId">
+                                                Required
                                             </div>
-                                            <div class="form-floating mb-3">
-                                                <div>
-                                                    <input type="checkbox" class="form-check-input"
-                                                           id="nftIsSensitiveId">
-                                                    <label class="form-check-label" for="nftIsSensitiveId"
-                                                           id="nftIsSensitiveLabelId">
-                                                        Is sensitive</label>
+
+                                            <div class="previewHeader">Hash</div>
+                                            <div class="previewValue small" id="previewassetHashId">Required
+                                            </div>
+
+                                            <div class="previewHeader">Main URI</div>
+                                            <div class="previewValue small" id="previewMainFileUrlId">
+                                                Required
+                                            </div>
+
+                                            <div class="previewHeader">Extra URIs</div>
+                                            <div class="previewValue small" id="previewSourceUrlsId">None</div>
+
+                                            <hr>
+
+                                            <h6>Metadata</h6>
+
+                                            <div class="previewHeader">Hash</div>
+                                            <div class="previewValue small" id="previewMetadataHashId">
+                                                Required
+                                            </div>
+
+                                            <div class="previewHeader">Main URI</div>
+                                            <div class="previewValue small" id="previewMetadataUrlId">Required
+                                            </div>
+
+                                            <div class="previewHeader">Extra URIs</div>
+                                            <div class="previewValue small" id="previewMetadataUrlsId">None
+                                            </div>
+
+                                            <hr>
+
+                                            <h6>License</h6>
+
+
+                                            <div class="previewHeader">Hash</div>
+                                            <div class="previewValue small" id="previewSourceLicenseHashId">
+                                                Required
+                                            </div>
+
+                                            <div class="previewHeader">Main URI</div>
+                                            <div class="previewValue small" id="previewLicenseUrlId">Required
+                                            </div>
+
+                                            <div class="previewHeader">Extra URIs</div>
+                                            <div class="previewValue small" id="previewLicenseUrlsId">None</div>
+
+
+                                            <hr>
+                                            <h6>Royalties</h6>
+
+                                            <div data-bs-toggle="tooltip" data-bs-placement="auto"
+                                                 title="Percentage of the sale price, that will be added to the total price.">
+                                                <div class="previewHeader">Percentage</div>
+                                                <div class="previewValue" id="previewRoyaltyId">Required</div>
+                                            </div>
+
+                                            <div data-bs-toggle="tooltip" data-bs-placement="auto"
+                                                 title="Where royalties will be sent">
+                                                <div class="previewHeader">Receive Address</div>
+                                                <div class="previewValue small"
+                                                     id="previewRoyaltyReceiveAddressId">
+                                                    Required
                                                 </div>
                                             </div>
 
                                             <hr>
 
-                                            <div class="row g-5">
+                                            <div data-bs-toggle="tooltip" data-bs-placement="auto"
+                                                 title="Where the minted NFTs will be sent.">
 
-                                                <div class="col-md-6">
-
-                                                    <div class="form-floating mb-3">
-                                                        <input type="text"
-                                                               class="form-control floatingTextField"
-                                                               id="seriesNumberId"
-                                                               placeholder="">
-                                                        <label for="seriesNumberId"
-                                                               id="seriesNumberLabelId">Series
-                                                            Number</label>
-                                                    </div>
+                                                <div class="previewHeader">Target Address</div>
+                                                <div class="previewValue small"
+                                                     id="previewTargetReceiveAddressId">
+                                                    Required
                                                 </div>
-                                                <div class="col-md-6">
-
-                                                    <div class="form-floating mb-3">
-                                                        <input type="text"
-                                                               class="form-control floatingTextField"
-                                                               id="seriesTotalId"
-                                                               placeholder="">
-                                                        <label for="seriesTotalId" id="seriesTotalLabelId">Series
-                                                            Total</label>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-
-                                        <div class="tab-pane fade" id="nav-traits" role="tabpanel"
-                                             aria-labelledby="nav-traits-tab">
-
-                                            <div id="traitsListId"></div>
-
-                                            <div class="form-floating mb-3">
-                                                <button id="addTraitButtonId" type="button"
-                                                        class="btn btn-primary btn-sm fillSpace">
-                                                    Add Trait (+)
-                                                </button>
                                             </div>
 
-                                        </div>
+                                            <div data-bs-toggle="tooltip" data-bs-placement="auto"
+                                                 title="The DID for the original owner of the NFTs.">
+                                                <div class="previewHeader">DID Address</div>
+                                                <div class="previewValue small" id="previewDidAddressId">None
+                                                </div>
+                                            </div>
 
-                                    </div>
-
-                                </div>
-
-
-                            </div>
-
-                            <!-- TAB PANE -->
-                            <div class="tab-pane fade ps-3 pe-3 pt-3" id="nav-preview" role="tabpanel"
-                                 aria-labelledby="nav-json-tab">
-
-
-                                <!-- Uploaded Image Preview -->
-                                <img class="bd-placeholder-img card-img-top mb-3" id="mainImagePreviewId">
-
-                                <nav>
-                                    <div class="nav nav-tabs mb-3 noselect" id="metadata-tab"
-                                         role="tablist">
-                                        <button class="nav-link active" id="metadata-home-tab"
-                                                data-bs-toggle="tab"
-                                                data-bs-target="#nav-home" type="button" role="tab"
-                                                aria-controls="nav-home" aria-selected="true">Summary
-                                        </button>
-                                        <button class="nav-link" id="metadata-onchain-tab"
-                                                data-bs-toggle="tab"
-                                                data-bs-target="#nav-onchain" type="button" role="tab"
-                                                aria-controls="nav-onchain" aria-selected="false"
-                                                tabindex="-1">On–Chain
-                                        </button>
-                                        <button class="nav-link" id="metadata-json-tab" data-bs-toggle="tab"
-                                                data-bs-target="#nav-json" type="button" role="tab"
-                                                aria-controls="nav-json" aria-selected="false"
-                                                tabindex="-1">Metadata
-                                        </button>
-                                    </div>
-                                </nav>
-
-                                <div class="tab-content" id="metadata-tabContent">
-                                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
-                                         aria-labelledby="nav-home-tab">
-
-
-                                        <div class="previewHeader">Name</div>
-                                        <div class="previewValue" id="previewNameId"></div>
-
-                                        <div class="previewHeader">Description</div>
-                                        <div class="previewValue" id="previewDescriptionId"></div>
-
-                                        <div class="previewHeader">Is Sensitive</div>
-                                        <div class="previewValue" id="previewIsSensitiveId"></div>
-
-                                        <div class="previewHeader">NFT Id</div>
-                                        <div class="previewValue" id="previewNftId"></div>
-
-
-                                        <div id="previewTraitsTable" class="hidden">
                                             <hr>
 
-                                            <table class="table table-striped">
-                                                <thead>
-                                                <tr>
 
-                                                    <th>Trait Type</th>
-                                                    <th>Value</th>
-                                                    <th>Min/Max</th>
-                                                    <th>Rarity</th>
-                                                </tr>
+                                            <div data-bs-toggle="tooltip" data-bs-placement="auto"
+                                                 title="Edition Number is typically 1">
+                                                <div class="previewHeader">Edition Number</div>
+                                                <div class="previewValue" id="previewEditionNumberId">Not set
+                                                </div>
+                                            </div>
 
-                                                </thead>
-                                                <tbody id="previewTraitsId"></tbody>
-                                            </table>
+                                            <div data-bs-toggle="tooltip" data-bs-placement="auto"
+                                                 title="Edition Total is typically 1">
+                                                <div class="previewHeader">Edition Total</div>
+                                                <div class="previewValue" id="previewEditionTotalId">Not set
+                                                </div>
+                                            </div>
+
+                                            <hr>
+
+                                            <div data-bs-toggle="tooltip" data-bs-placement="auto"
+                                                 title="Chia's blockchain fee for minting the NFT. The min allowed is 1 mojo or .000000000001 XCH.">
+                                                <div class="previewHeader">Fee</div>
+                                                <div class="previewValue" id="previewFeeId"></div>
+                                            </div>
 
                                         </div>
-
-                                        <div class="previewHeader">Collection Id</div>
-                                        <div class="previewValue" id="previewCollectionIdId"></div>
-
-                                        <div class="previewHeader">Collection Name</div>
-                                        <div class="previewValue" id="previewCollectionNameId"></div>
-
-                                        <div class="previewHeader">Collection Description</div>
-                                        <div class="previewValue" id="previewCollectionDescriptionId"></div>
-
-                                        <hr>
-
-                                        <div id="previewCollectionOptionalId"></div>
-
                                     </div>
-                                    <div class="tab-pane fade" id="nav-json" role="tabpanel"
-                                         aria-labelledby="nav-json-tab">
 
-                                        <p id="previewJsonId" class="pre selectable"></p>
-                                    </div>
-                                    <div class="tab-pane fade" id="nav-onchain" role="tabpanel"
-                                         aria-labelledby="nav-onchain-tab">
-
-                                        <h6>Asset</h6>
-                                        <div class="previewHeader">Source Filename</div>
-                                        <div class="previewValue" id="previewSourceImageFileNameId">
-                                            Required
-                                        </div>
-
-                                        <div class="previewHeader">Hash</div>
-                                        <div class="previewValue small" id="previewassetHashId">Required
-                                        </div>
-
-                                        <div class="previewHeader">Main URI</div>
-                                        <div class="previewValue small" id="previewMainFileUrlId">
-                                            Required
-                                        </div>
-
-                                        <div class="previewHeader">Extra URIs</div>
-                                        <div class="previewValue small" id="previewSourceUrlsId">None</div>
-
-                                        <hr>
-
-                                        <h6>Metadata</h6>
-
-                                        <div class="previewHeader">Hash</div>
-                                        <div class="previewValue small" id="previewMetadataHashId">
-                                            Required
-                                        </div>
-
-                                        <div class="previewHeader">Main URI</div>
-                                        <div class="previewValue small" id="previewMetadataUrlId">Required
-                                        </div>
-
-                                        <div class="previewHeader">Extra URIs</div>
-                                        <div class="previewValue small" id="previewMetadataUrlsId">None
-                                        </div>
-
-                                        <hr>
-
-                                        <h6>License</h6>
-
-
-                                        <div class="previewHeader">Hash</div>
-                                        <div class="previewValue small" id="previewSourceLicenseHashId">
-                                            Required
-                                        </div>
-
-                                        <div class="previewHeader">Main URI</div>
-                                        <div class="previewValue small" id="previewLicenseUrlId">Required
-                                        </div>
-
-                                        <div class="previewHeader">Extra URIs</div>
-                                        <div class="previewValue small" id="previewLicenseUrlsId">None</div>
-
-
-                                        <hr>
-                                        <h6>Royalties</h6>
-
-                                        <div data-bs-toggle="tooltip" data-bs-placement="auto"
-                                             title="Percentage of the sale price, that will be added to the total price.">
-                                            <div class="previewHeader">Percentage</div>
-                                            <div class="previewValue" id="previewRoyaltyId">Required</div>
-                                        </div>
-
-                                        <div data-bs-toggle="tooltip" data-bs-placement="auto"
-                                             title="Where royalties will be sent">
-                                            <div class="previewHeader">Receive Address</div>
-                                            <div class="previewValue small"
-                                                 id="previewRoyaltyReceiveAddressId">
-                                                Required
-                                            </div>
-                                        </div>
-
-                                        <hr>
-
-                                        <div data-bs-toggle="tooltip" data-bs-placement="auto"
-                                             title="Where the minted NFTs will be sent.">
-
-                                            <div class="previewHeader">Target Address</div>
-                                            <div class="previewValue small"
-                                                 id="previewTargetReceiveAddressId">
-                                                Required
-                                            </div>
-                                        </div>
-
-                                        <div data-bs-toggle="tooltip" data-bs-placement="auto"
-                                             title="The DID for the original owner of the NFTs.">
-                                            <div class="previewHeader">DID Address</div>
-                                            <div class="previewValue small" id="previewDidAddressId">None
-                                            </div>
-                                        </div>
-
-                                        <hr>
-
-
-                                        <div data-bs-toggle="tooltip" data-bs-placement="auto"
-                                             title="Edition Number is typically 1">
-                                            <div class="previewHeader">Edition Number</div>
-                                            <div class="previewValue" id="previewEditionNumberId">Not set
-                                            </div>
-                                        </div>
-
-                                        <div data-bs-toggle="tooltip" data-bs-placement="auto"
-                                             title="Edition Total is typically 1">
-                                            <div class="previewHeader">Edition Total</div>
-                                            <div class="previewValue" id="previewEditionTotalId">Not set
-                                            </div>
-                                        </div>
-
-                                        <hr>
-
-                                        <div data-bs-toggle="tooltip" data-bs-placement="auto"
-                                             title="Chia's blockchain fee for minting the NFT. The min allowed is 1 mojo or .000000000001 XCH.">
-                                            <div class="previewHeader">Fee</div>
-                                            <div class="previewValue" id="previewFeeId"></div>
-                                        </div>
-
-                                    </div>
                                 </div>
 
-                            </div>
+                                <!-- TAB PANE -->
+                                <div class="tab-pane fade ps-3 pe-3 pt-3" id="nav-admin" role="tabpanel"
+                                     aria-labelledby="nav-admin-tab">
 
-                            <!-- TAB PANE -->
-                            <div class="tab-pane fade ps-3 pe-3 pt-3" id="nav-admin" role="tabpanel"
-                                 aria-labelledby="nav-admin-tab">
+                                    <p>Warning! Deleting this NFT is not undoable.</p>
+                                    <div class="form-floating mb-3">
+                                        <button type="button" class="btn btn-outline-danger full-width"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#confirmDeleteNft">
+                                            Delete NFT
+                                        </button>
+                                    </div>
 
-                                <p>Warning! Deleting this NFT is not undoable.</p>
-                                <div class="form-floating mb-3">
-                                    <button type="button" class="btn btn-outline-danger full-width"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#confirmDeleteNft">
-                                        Delete NFT
-                                    </button>
                                 </div>
 
                             </div>
@@ -1880,8 +1930,59 @@
 
                     </div>
 
-                </div>
+                    <div class="tab-pane fade pt-3 ps-3 pe-3" id="mint-panel" role="tabpanel"
+                         aria-labelledby="mint-tab">
 
+                        <div id="mintPanelId"
+                             class="hidden d-flex flex-column align-items-stretch flex-shrink-0  bg-light">
+                            <div class="col mb-3">
+
+                                <!--<table class="table">
+                                    <tbody>
+                                    <tr id="batchesRowId">
+                                        <td colspan="3">-->
+                                <h5>
+                                    <svg class="bi buttonSvg " width="25" height="25">
+                                        <use xlink:href="#mintbatch"></use>
+                                    </svg>
+                                    <span class="mt-1">Batches</span>
+                                </h5>
+                                <div>
+                                    <div id="batchListBlankMessageId"
+                                         class="col mt-3 mb-3 noselect">
+                                        <div class="p-2 bg-body-secondary border rounded-3 ">
+                                            <div class="row ps-3 pe-3">
+                                                No batches yet.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <table id="batchListTableId"
+                                           class="table table-striped noselect">
+                                        <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Created</th>
+                                            <th>Items</th>
+                                            <th>Actions</th>
+
+                                        </tr>
+                                        </thead>
+                                        <tbody id="collectionEditorBatchesId"
+                                               class="align-middle"></tbody>
+                                    </table>
+                                </div>
+                                <!--</td>
+                            </tr>
+                            </tbody>
+                        </table>-->
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
             </div>
         </div>
 
@@ -2010,7 +2111,7 @@
                                    id="uploadCurrentNFTId"
                                    checked>
                             <label class="form-check-label" for="uploadCurrentNFTId">
-                                <b>Current</b><br/>
+                                <b>Current NFT</b><br/>
                                 <span>All the assets and metadata for the current NFT</span>
                             </label>
                         </div>
@@ -2110,7 +2211,6 @@
                     </div>
 
 
-
                     <div class="table-responsive">
                         <table class="table align-middle">
                             <tr>
@@ -2122,7 +2222,23 @@
                         <table class="table align-middle">
                             <tr>
 
-
+                                <!--<td>
+                                    <button type="button" class="btn full-width btn-outline-danger"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#confirmDeleteBatch">
+                                        <svg class="fill-current-color pe-none" width="25" height="25">
+                                            <use xlink:href="#deleteforever"></use>
+                                        </svg>&nbsp; Delete
+                                    </button>
+                                </td>-->
+                                <!--<td>
+                                    <button type="button" id="autofillBatchButtonId"
+                                            class="btn full-width btn-outline-primary">
+                                        <svg class="fill-current-color pe-none" width="25" height="25">
+                                            <use xlink:href="#autofix"></use>
+                                        </svg>&nbsp; Auto–Fill
+                                    </button>
+                                </td>-->
                                 <td>
                                     <button type="button" id="uploadBatchButtonId"
                                             class="btn full-width btn-outline-primary">
@@ -2144,6 +2260,7 @@
                         </table>
                     </div>
 
+                    <!--                            </div>-->
 
 
                     <div class="card">
@@ -2263,10 +2380,7 @@
                                         <ol class="list-group list-group-numbered" id="oneAtATimeScriptsId">
 
 
-
-
                                         </ol>
-
 
 
                                     </div>
@@ -2531,19 +2645,18 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="uploadModalLabel">Upload Assets to IPFS</h1>
-
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                     <svg class="bi closeSvg" width="25" height="25">
                         <use xlink:href="#close"></use>
                     </svg>
                 </button>
             </div>
+
             <div class="modal-body">
                 <div class="h-100 p-3 bg-body-tertiary border noselect rounded-3 mb-4">
-                    <p class="m-0">To start uploading, please choose the directory on your device, where the files are
-                        located.</p>
+                    <p class="m-0" id="uploadDirectoryMessageId">To begin uploading, please choose the directory on your device where the files are located.</p>
+                    <p class="m-0" id="uploadFileMessageId">Please select the file <span id="fileToUploadId"></span> on your device to start uploading.</p>
                 </div>
-
                 <form enctype="multipart/form-data">
                     <div class="form group">
                         <input type="file" id="uploadFilepicker" name="fileList" webkitdirectory multiple
@@ -2871,7 +2984,37 @@
                                 <div class="input-group mb-3">
 
                                     <div class="form group">
+                                        <!--<div class="form-check">
+                                            <input id="ignoreImagesId" class="form-check-input" type="radio"
+                                                   name="imageConversionOption">
+                                            <label class="form-check-label noselect" for="ignoreImagesId">
+                                                Scan Images
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="imageConversionOption"
+                                                   id="importOriginalsId">
+                                            <label class="form-check-label noselect" for="importOriginalsId">
+                                                Import Images
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="imageConversionOption"
+                                                   id="convertImagesId"
+                                                   checked>
+                                            <label class="form-check-label noselect" for="convertImagesId">
+                                                Convert Images
+                                            </label>
+                                        </div>-->
 
+                                        <!--<div class="form-check">
+                                            <input class="form-check-input" type="radio" name="imageConversionOption"
+                                                   id="useImagesForThumbnailId"
+                                                   checked>
+                                            <label class="form-check-label noselect" for="useImagesForThumbnailId">
+                                                Use Images For Thumbnail
+                                            </label>
+                                        </div>-->
 
                                     </div>
 
@@ -2950,7 +3093,37 @@
                                 <div class="input-group mb-3">
 
                                     <div class="form group">
+                                        <!-- <div class="form-check">
+                                             <input id="videosIgnoreId" class="form-check-input" type="radio"
+                                                    name="videoConversionOption">
+                                             <label class="form-check-label noselect" for="videosIgnoreId">
+                                                 Scan Videos
+                                             </label>
+                                         </div>
+                                         <div class="form-check">
+                                             <input class="form-check-input" type="radio" name="videoConversionOption"
+                                                    id="importOriginalVideosId">
+                                             <label class="form-check-label noselect" for="importOriginalVideosId">
+                                                 Import Videos
+                                             </label>
+                                         </div>
+                                         <div class="form-check">
+                                             <input class="form-check-input" type="radio" name="videoConversionOption"
+                                                    id="convertVideosId"
+                                                    checked>
+                                             <label class="form-check-label noselect" for="convertVideosId">
+                                                 Convert Videos
+                                             </label>
+                                         </div>-->
 
+                                        <!-- <div class="form-check">
+                                             <input class="form-check-input" type="radio" name="videoConversionOption"
+                                                    id="useVideosForThumbnailId"
+                                                    checked>
+                                             <label class="form-check-label noselect" for="useVideosForThumbnailId">
+                                                 Use Videos For Thumbnail
+                                             </label>
+                                         </div>-->
 
                                     </div>
 

@@ -702,25 +702,35 @@ main {
     color: var(--main-text-color);
 }
 
-.traitOverrideCheckbox{
+.traitOverrideCheckbox {
     position: absolute;
     top: 2.3em;
     left: 1.3em;
 }
 
-.fileLabelOffset{
+.fileLabelOffset {
     top: -.2em;
     position: relative;
 }
 
-.badge{
+.badge {
     margin-right: 0.5em;
     margin-bottom: 0.5em;
 }
 
-.centerText{
+.centerText {
     text-align: center;
 }
-.centerText a{
-     color:white;
- }
+
+.centerText a {
+    color: white;
+}
+
+#panelContainerId {
+    width: 28em;
+}
+
+#editor-tab > button > .row {
+    top: 0.4em;
+    position: relative;
+}
